@@ -1,4 +1,3 @@
-```javascript
 "use client";
 
 import React, { useState } from 'react';
@@ -99,39 +98,79 @@ export default function Home() {
               ))}
             </div>
 
-                  <thead>
-                    <tr>
-                      <th className="w-16"></th>
-                      {X_AXES.map(x => (
-                        <th key={x} className="text-[10px] font-black text-gray-400 uppercase pb-2">{x}</th>
-                      ))}
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {Y_AXES.map(y => (
-                      <tr key={y}>
-                        <td className="text-[10px] font-black text-gray-400 uppercase text-right pr-2">{y}</td>
-                        {X_AXES.map(x => {
-                          const id = `${ x.toLowerCase() } -${ y.toLowerCase() } `;
-                          const type = personalityTypes[id];
-                          return (
-                            <td key={id} className="p-1">
-                              <div
-                                className="h-10 rounded-xl flex items-center justify-center text-lg shadow-sm border border-white/50"
-                                style={{ backgroundColor: `${ type.color } 33` }}
-                                title={type.name}
-                              >
-                                {type.emoji}
-                              </div>
-                            </td>
-                          );
-                        })}
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
+            {/* Matrix View */}
+            <div className="w-full bg-white p-1 md:p-10 rounded-[40px] md:rounded-[60px] shadow-2xl border-4 border-white mb-20 overflow-hidden">
+              <div className="flex flex-col items-center mb-10 text-center px-4">
+                <div className="bg-pink-50 px-4 py-1 rounded-full mb-4">
+                  <p className="text-[10px] font-black text-pink-500 uppercase tracking-[0.3em]">Full Comparison Matrix</p>
+                </div>
+                <h3 className="text-2xl md:text-3xl font-black text-gray-800">全36タイプの類型的分類</h3>
+                <p className="text-gray-400 text-[10px] md:text-xs mt-2 uppercase tracking-widest font-bold">X: Core Value × Y: Relationship Style</p>
               </div>
-              <p className="text-center text-[10px] text-gray-400 mt-6 font-medium">合計36の恋愛スタイル。あなたはどこに位置する？</p>
+
+              <div className="overflow-x-auto pb-6 scrollbar-pink">
+                <div className="min-w-[1000px] px-4">
+                  <table className="w-full border-separate border-spacing-2">
+                    <thead>
+                      <tr>
+                        <th className="w-24"></th>
+                        {X_AXES.map(x => (
+                          <th key={x} className="pb-4">
+                            <div className="bg-gray-50 py-3 rounded-2xl border border-gray-100">
+                              <p className="text-[10px] font-black text-gray-400 uppercase tracking-widest mb-1">{x}</p>
+                              <p className="text-xs font-black text-gray-600">{personalityTypes[`${x.toLowerCase()}-${Y_AXES[0].toLowerCase()}`]?.emoji} {x}</p>
+                            </div>
+                          </th>
+                        ))}
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {Y_AXES.map(y => (
+                        <tr key={y}>
+                          <td className="pr-4 py-2">
+                            <div className="bg-white py-4 rounded-2xl border border-gray-100 shadow-sm text-center">
+                              <p className="text-[9px] font-black text-pink-300 uppercase tracking-tighter mb-1">{y}</p>
+                              <p className="text-[10px] font-black text-gray-500 leading-tight px-1">{y}</p>
+                            </div>
+                          </td>
+                          {X_AXES.map(x => {
+                            const id = `${x.toLowerCase()}-${y.toLowerCase()}`;
+                            const type = personalityTypes[id];
+                            return (
+                              <td key={id} className="p-1 group">
+                                <motion.div
+                                  whileHover={{ y: -5, scale: 1.02 }}
+                                  className="bg-gray-50/50 rounded-3xl border border-gray-100 p-2 flex flex-col items-center transition-all hover:bg-white hover:shadow-xl hover:border-pink-100 h-full"
+                                >
+                                  <div className="relative w-full aspect-square rounded-2xl overflow-hidden mb-2 bg-white shadow-inner">
+                                    <Image
+                                      src={type.imagePath}
+                                      alt={type.name}
+                                      fill
+                                      className="object-cover group-hover:scale-110 transition-transform duration-500"
+                                    />
+                                    <div className="absolute top-1 right-1 bg-white/90 backdrop-blur-sm w-6 h-6 rounded-lg flex items-center justify-center text-xs shadow-sm">
+                                      {type.emoji}
+                                    </div>
+                                  </div>
+                                  <p className="text-[9px] font-bold text-gray-700 text-center leading-tight line-clamp-2 px-1 mb-1">
+                                    {type.name}
+                                  </p>
+                                </motion.div>
+                              </td>
+                            );
+                          })}
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+              <div className="mt-8 text-center bg-gray-50 py-4 rounded-3xl mx-4">
+                <p className="text-[11px] text-gray-400 font-bold tracking-widest uppercase">
+                  ✨ 合計36通りの恋愛スタイル。あなたはどこに位置する？
+                </p>
+              </div>
             </div>
           </motion.div>
         ) : (
