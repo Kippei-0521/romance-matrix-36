@@ -3,7 +3,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { PersonalityType, personalityTypes, X_AXES, Y_AXES } from '../lib/quizData';
-import { RefreshCw, Share2, Heart, Star, Sparkles, Wand2, ShieldAlert, HeartHandshake, Map } from 'lucide-react';
+import { RefreshCw, Share2, Heart, Star, Sparkles, Wand2, ShieldAlert, HeartHandshake, Map, Grid } from 'lucide-react';
 import Image from 'next/image';
 
 interface ResultProps {
