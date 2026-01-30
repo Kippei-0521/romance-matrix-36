@@ -65,7 +65,7 @@ export default function QuizComponent() {
     const getResultType = () => {
         // Find highest score on X-axis
         let maxX = -Infinity;
-        let selectedX = X_AXES[0];
+        let selectedX: any = X_AXES[0];
         X_AXES.forEach(x => {
             const score = scoresX[x] || 0;
             if (score > maxX) {
@@ -76,7 +76,7 @@ export default function QuizComponent() {
 
         // Find highest score on Y-axis
         let maxY = -Infinity;
-        let selectedY = Y_AXES[0];
+        let selectedY: any = Y_AXES[0];
         Y_AXES.forEach(y => {
             const score = scoresY[y] || 0;
             if (score > maxY) {
