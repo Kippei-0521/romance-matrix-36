@@ -120,43 +120,48 @@ const UNIQUE_CHARACTERS: Record<string, string> = {
     "vibrant-stoic": "不滅の冒険家"
 };
 
-const CHARACTER_VISUALS: Record<string, { symbol: string; pattern: string; colorSecondary: string }> = {
-    "romantic-traditional": { symbol: "Sword", pattern: "Shield", colorSecondary: "#ff4d6d" },
-    "romantic-modern": { symbol: "Heads", pattern: "City", colorSecondary: "#ff758f" },
-    "romantic-casual": { symbol: "Feather", pattern: "Wind", colorSecondary: "#ff85a1" },
-    "romantic-formal": { symbol: "Crown", pattern: "Silk", colorSecondary: "#c9184a" },
-    "romantic-creative": { symbol: "Sparkles", pattern: "Stars", colorSecondary: "#ffb3c1" },
-    "romantic-stoic": { symbol: "Flame", pattern: "Ash", colorSecondary: "#a4161a" },
-    "analytical-traditional": { symbol: "Library", pattern: "Scroll", colorSecondary: "#0077b6" },
-    "analytical-modern": { symbol: "Cpu", pattern: "Grid", colorSecondary: "#00b4d8" },
-    "analytical-casual": { symbol: "Eye", pattern: "Mist", colorSecondary: "#90e0ef" },
-    "analytical-formal": { symbol: "Gavel", pattern: "Law", colorSecondary: "#03045e" },
-    "analytical-creative": { symbol: "Zap", pattern: "Pulse", colorSecondary: "#caf0f8" },
-    "analytical-stoic": { symbol: "Diamond", pattern: "Stone", colorSecondary: "#023e8a" },
-    "independent-traditional": { symbol: "Mountain", pattern: "Peak", colorSecondary: "#fb8500" },
-    "independent-modern": { symbol: "Rocket", pattern: "Space", colorSecondary: "#ffb703" },
-    "independent-casual": { symbol: "Compass", pattern: "Map", colorSecondary: "#8ecae6" },
-    "independent-formal": { symbol: "ScrollText", pattern: "Ink", colorSecondary: "#219ebc" },
-    "independent-creative": { symbol: "Palette", pattern: "Paint", colorSecondary: "#023047" },
-    "independent-stoic": { symbol: "Book", pattern: "Pages", colorSecondary: "#000000" },
-    "altruistic-traditional": { symbol: "Church", pattern: "Light", colorSecondary: "#7209b7" },
-    "altruistic-modern": { symbol: "Users", pattern: "Network", colorSecondary: "#3a0ca3" },
-    "altruistic-casual": { symbol: "Coffee", pattern: "Steam", colorSecondary: "#4361ee" },
-    "altruistic-formal": { symbol: "Key", pattern: "Lock", colorSecondary: "#4cc9f0" },
-    "altruistic-creative": { symbol: "Sun", pattern: "Rays", colorSecondary: "#f72585" },
-    "altruistic-stoic": { symbol: "ShieldCheck", pattern: "Armor", colorSecondary: "#b5179e" },
-    "enigmatic-traditional": { symbol: "Scroll", pattern: "Ancient", colorSecondary: "#3c096c" },
-    "enigmatic-modern": { symbol: "Wand", pattern: "Magic", colorSecondary: "#5a189a" },
-    "enigmatic-casual": { symbol: "Masks", pattern: "Shadow", colorSecondary: "#7b2cbf" },
-    "enigmatic-formal": { symbol: "Snowflake", pattern: "Ice", colorSecondary: "#9d4edd" },
-    "enigmatic-creative": { symbol: "Ghost", pattern: "Spirit", colorSecondary: "#c77dff" },
-    "enigmatic-stoic": { symbol: "Moon", pattern: "Night", colorSecondary: "#240046" },
-    "vibrant-traditional": { symbol: "Trophy", pattern: "Gold", colorSecondary: "#ff9f1c" },
-    "vibrant-modern": { symbol: "Music", pattern: "Vinyl", colorSecondary: "#ffbf69" },
-    "vibrant-casual": { symbol: "Gamepad", pattern: "Pixels", colorSecondary: "#ffffff" },
-    "vibrant-formal": { symbol: "GlassWater", pattern: "Toast", colorSecondary: "#2ec4b6" },
-    "vibrant-creative": { symbol: "Lightbulb", pattern: "Idea", colorSecondary: "#cbf3f0" },
-    "vibrant-stoic": { symbol: "Footprints", pattern: "Path", colorSecondary: "#ff5400" }
+const CHARACTER_VISUALS: Record<string, { mobType: string; skinColor: string; eyeColor: string; item: string; accessory: string }> = {
+    "romantic-traditional": { mobType: "human", skinColor: "#ffcad4", eyeColor: "#ff4d6d", item: "DiamondSword", accessory: "Helmet" },
+    "romantic-modern": { mobType: "human", skinColor: "#f8edeb", eyeColor: "#3d348b", item: "Rose", accessory: "Headphones" },
+    "romantic-casual": { mobType: "human", skinColor: "#fcd5ce", eyeColor: "#fb6f92", item: "Feather", accessory: "Hat" },
+    "romantic-formal": { mobType: "human", skinColor: "#ffe5d9", eyeColor: "#800f2f", item: "Heart", accessory: "Crown" },
+    "romantic-creative": { mobType: "human", skinColor: "#d8e2dc", eyeColor: "#ff006e", item: "Sparkles", accessory: "Rainbow" },
+    "romantic-stoic": { mobType: "human", skinColor: "#ece4db", eyeColor: "#590d22", item: "Flame", accessory: "Cape" },
+
+    "analytical-traditional": { mobType: "owl", skinColor: "#d4a373", eyeColor: "#023047", item: "Book", accessory: "Glasses" },
+    "analytical-modern": { mobType: "robot", skinColor: "#e9ecef", eyeColor: "#00b4d8", item: "Compass", accessory: "Antenna" },
+    "analytical-casual": { mobType: "human", skinColor: "#edede9", eyeColor: "#219ebc", item: "Magnifier", accessory: "Scarf" },
+    "analytical-formal": { mobType: "human", skinColor: "#d6ccc2", eyeColor: "#03045e", item: "Scroll", accessory: "Tie" },
+    "analytical-creative": { mobType: "robot", skinColor: "#f8f9fa", eyeColor: "#ff9f1c", item: "Wrench", accessory: "Goggles" },
+    "analytical-stoic": { mobType: "human", skinColor: "#f5ebe0", eyeColor: "#023e8a", item: "Clock", accessory: "Mask" },
+
+    "independent-traditional": { mobType: "wolf", skinColor: "#dee2e6", eyeColor: "#fb8500", item: "Bone", accessory: "Spikes" },
+    "independent-modern": { mobType: "human", skinColor: "#e3f2fd", eyeColor: "#ffb703", item: "Rocket", accessory: "Jetpack" },
+    "independent-casual": { mobType: "cat", skinColor: "#faedcd", eyeColor: "#8ecae6", item: "Fish", accessory: "Bell" },
+    "independent-formal": { mobType: "eagle", skinColor: "#fdf0d5", eyeColor: "#219ebc", item: "Claw", accessory: "EagleHat" },
+    "independent-creative": { mobType: "human", skinColor: "#f1f1f1", eyeColor: "#023047", item: "Palette", accessory: "Beret" },
+    "independent-stoic": { mobType: "human", skinColor: "#e5e5e5", eyeColor: "#000000", item: "Staff", accessory: "Hood" },
+
+    "altruistic-traditional": { mobType: "human", skinColor: "#f8f0fb", eyeColor: "#7209b7", item: "Potion", accessory: "Halo" },
+    "altruistic-modern": { mobType: "human", skinColor: "#f1f3f5", eyeColor: "#3a0ca3", item: "Hands", accessory: "Badge" },
+    "altruistic-casual": { mobType: "dog", skinColor: "#fdf0d5", eyeColor: "#4361ee", item: "Cookie", accessory: "Collar" },
+    "altruistic-formal": { mobType: "human", skinColor: "#ffffff", eyeColor: "#4cc9f0", item: "Key", accessory: "Suit" },
+    "altruistic-creative": { mobType: "human", skinColor: "#fff0f3", eyeColor: "#f72585", item: "Sun", accessory: "Flower" },
+    "altruistic-stoic": { mobType: "human", skinColor: "#f8f9fa", eyeColor: "#b5179e", item: "Shield", accessory: "Bracers" },
+
+    "enigmatic-traditional": { mobType: "enderman", skinColor: "#161a1d", eyeColor: "#9d4edd", item: "EnderEye", accessory: "Smoke" },
+    "enigmatic-modern": { mobType: "human", skinColor: "#212529", eyeColor: "#5a189a", item: "Wand", accessory: "Cape" },
+    "enigmatic-casual": { mobType: "fox", skinColor: "#ffb703", eyeColor: "#fb8500", item: "Berry", accessory: "Tail" },
+    "enigmatic-formal": { mobType: "human", skinColor: "#ced4da", eyeColor: "#3c096c", item: "Snowflake", accessory: "Fur" },
+    "enigmatic-creative": { mobType: "slime", skinColor: "#b5e48c", eyeColor: "#1a7431", item: "SlimeBall", accessory: "Bubbles" },
+    "enigmatic-stoic": { mobType: "human", skinColor: "#343a40", eyeColor: "#240046", item: "Moon", accessory: "Blindfold" },
+
+    "vibrant-traditional": { mobType: "human", skinColor: "#fffbeb", eyeColor: "#fbbf24", item: "Trophy", accessory: "Aura" },
+    "vibrant-modern": { mobType: "human", skinColor: "#fff1f2", eyeColor: "#e11d48", item: "Disc", accessory: "Neon" },
+    "vibrant-casual": { mobType: "human", skinColor: "#ecfdf5", eyeColor: "#10b981", item: "Gamepad", accessory: "PikachuHat" },
+    "vibrant-formal": { mobType: "human", skinColor: "#fef2f2", eyeColor: "#dc2626", item: "Vine", accessory: "GoldChain" },
+    "vibrant-creative": { mobType: "phoenix", skinColor: "#ffedd5", eyeColor: "#ea580c", item: "Lightbulb", accessory: "Fire" },
+    "vibrant-stoic": { mobType: "human", skinColor: "#fafaf9", eyeColor: "#44403c", item: "Boots", accessory: "Backpack" }
 };
 
 export const personalityTypes: Record<string, PersonalityType> = {};
@@ -169,7 +174,7 @@ X_AXES.forEach((x, xIdx) => {
         const yInfo = Y_PSYCHOLOGY[y];
         const xDetail = X_DETAILS[x];
         const yDetail = Y_DETAILS[y];
-        const visual = CHARACTER_VISUALS[id] || { symbol: "User", pattern: "Circles", colorSecondary: "#cccccc" };
+        const visual = CHARACTER_VISUALS[id] || { mobType: "human", skinColor: "#ffffff", eyeColor: "#000000", item: "Stick", accessory: "None" };
 
         personalityTypes[id] = {
             id,
