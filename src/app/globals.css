@@ -1,26 +1,146 @@
 @import "tailwindcss";
 
+@theme {
+  --color-primary-pink: #ff85a1;
+  --color-primary-blue: #a0c4ff;
+  --color-soft-bg: #fff5f7;
+  --color-text-main: #4a4a4a;
+}
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  --font-inter: "Inter", "Outfit", "Noto Sans JP", sans-serif;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background-color: var(--color-soft-bg);
+  color: var(--color-text-main);
+  font-family: var(--font-inter);
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+}
+
+/* Glassmorphism Classes */
+.glass-card {
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  box-shadow: 0 12px 40px -10px rgba(255, 133, 161, 0.15);
+  border-radius: 32px;
+}
+
+/* Likert Scale Specifics */
+.likert-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+}
+
+.likert-option {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  cursor: pointer;
+  flex: 1;
+}
+
+.likert-circle {
+  border-radius: 9999px;
+  border: 2px solid #ffdeeb;
+  background: white;
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.likert-option:hover .likert-circle {
+  transform: scale(1.1);
+  border-color: #ff85a1;
+}
+
+.likert-circle.active {
+  background: linear-gradient(135deg, #ff85a1 0%, #ffb7c5 100%);
+  border-color: transparent;
+  box-shadow: 0 4px 15px rgba(255, 133, 161, 0.4);
+}
+
+.likert-label {
+  font-size: 10px;
+  font-weight: 700;
+  color: #999;
+  text-align: center;
+}
+
+/* Buttons */
+.btn-primary {
+  background: linear-gradient(135deg, #ff85a1 0%, #ffb7c5 100%);
+  color: white;
+  padding: 18px 40px;
+  border-radius: 100px;
+  font-weight: 800;
+  transition: all 0.3s ease;
+  box-shadow: 0 6px 20px rgba(255, 133, 161, 0.3);
+  border: none;
+  cursor: pointer;
+}
+
+.btn-primary:active {
+  transform: scale(0.96);
+}
+
+/* Result Styles */
+.result-section {
+  background: white;
+  padding: 24px;
+  border-radius: 20px;
+  margin-bottom: 20px;
+  border: 1px solid #fff0f3;
+}
+
+.result-tag {
+  display: inline-block;
+  padding: 4px 12px;
+  border-radius: 100px;
+  font-size: 12px;
+  font-weight: 700;
+  background: #fff5f7;
+  color: #ff85a1;
+  margin-right: 8px;
+  margin-bottom: 8px;
+}
+
+/* Animations */
+@keyframes floating {
+  0% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-15px);
+  }
+
+  100% {
+    transform: translateY(0);
+  }
+}
+
+.floating {
+  animation: floating 4s ease-in-out infinite;
+}
+
+.progress-bar-container {
+  height: 6px;
+  background-color: #fce7eb;
+  border-radius: 100px;
+  overflow: hidden;
+}
+
+.progress-bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #ff85a1, #a0c4ff);
+  border-radius: 100px;
 }
