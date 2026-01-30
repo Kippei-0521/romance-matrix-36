@@ -1,3 +1,5 @@
+import { CHARACTER_DESIGNS } from './characterDesigns';
+
 export type Question = {
     id: number;
     text: string;
@@ -174,7 +176,20 @@ X_AXES.forEach((x, xIdx) => {
         const yInfo = Y_PSYCHOLOGY[y];
         const xDetail = X_DETAILS[x];
         const yDetail = Y_DETAILS[y];
-        const visual = CHARACTER_VISUALS[id] || { animalType: "cat", furColor: "#ffffff", eyeColor: "#000000", personality: "normal", accessory: "none" };
+        const visual = CHARACTER_DESIGNS[id] || {
+            archetype: "Unknown",
+            animeStyle: "mixed" as const,
+            hairStyle: "Short",
+            hairColor: "#000000",
+            eyeColor: "#000000",
+            skinTone: "#f0e0d0",
+            outfit: "Simple clothes",
+            outfitColors: ["#ffffff"],
+            accessories: [],
+            pose: "Standing",
+            aura: "None",
+            distinctiveFeature: "None"
+        };
 
         personalityTypes[id] = {
             id,

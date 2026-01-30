@@ -5,7 +5,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import QuizComponent from '../components/QuizComponent';
 import { Heart, Grid, Sparkles } from 'lucide-react';
 import { personalityTypes, X_AXES, Y_AXES } from '../lib/quizData';
-import AnimalCrossingAvatar from '../components/AnimalCrossingAvatar';
+import CharacterPortrait from '../components/CharacterPortrait';
 
 export default function Home() {
   const [started, setStarted] = useState(false);
@@ -154,11 +154,13 @@ export default function Home() {
                               whileHover={{ y: -8, scale: 1.03 }}
                               className="bg-white rounded-[32px] border border-gray-100 p-3 flex flex-col items-center shadow-sm hover:shadow-2xl hover:border-pink-200 transition-all cursor-pointer group"
                             >
-                              <div className="relative w-full aspect-[4/5] rounded-[24px] overflow-hidden mb-3 bg-gradient-to-br from-pink-50 to-blue-50">
-                                <AnimalCrossingAvatar
+                              <div className="relative w-full aspect-[4/5] rounded-[24px] overflow-hidden mb-3 bg-gradient-to-br from-gray-900 to-gray-800">
+                                <CharacterPortrait
                                   typeId={id}
-                                  visual={visual}
+                                  design={visual}
                                   primaryColor={type.color}
+                                  size="small"
+                                  className="w-full h-full"
                                 />
                                 <div className="absolute top-2 right-2 bg-white/80 backdrop-blur-md w-7 h-7 rounded-xl flex items-center justify-center text-sm shadow-sm ring-1 ring-white/50 z-20">
                                   {type.emoji}

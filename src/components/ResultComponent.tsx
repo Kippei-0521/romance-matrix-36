@@ -4,7 +4,7 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { PersonalityType, personalityTypes, X_AXES, Y_AXES } from '../lib/quizData';
 import { RefreshCw, Share2, Heart, Star, Sparkles, Wand2, ShieldAlert, HeartHandshake, Map, Grid } from 'lucide-react';
-import AnimalCrossingAvatar from './AnimalCrossingAvatar';
+import CharacterPortrait from './CharacterPortrait';
 
 interface ResultProps {
     result: PersonalityType;
@@ -52,12 +52,13 @@ export default function ResultComponent({ result, onRestart }: ResultProps) {
                             initial={{ y: 20, opacity: 0 }}
                             animate={{ y: 0, opacity: 1 }}
                             transition={{ delay: 0.2 }}
-                            className="relative w-64 h-64 mb-4 rounded-3xl overflow-hidden shadow-2xl border-4 border-white bg-gradient-to-br from-pink-50 to-blue-50"
+                            className="relative w-64 h-64 mb-4 rounded-3xl overflow-hidden shadow-2xl border-4 border-gray-800 bg-gradient-to-br from-gray-900 to-gray-800"
                         >
-                            <AnimalCrossingAvatar
+                            <CharacterPortrait
                                 typeId={result.id}
-                                visual={(result as any).visual}
+                                design={(result as any).visual}
                                 primaryColor={result.color}
+                                size="large"
                             />
                         </motion.div>
 
@@ -120,11 +121,12 @@ export default function ResultComponent({ result, onRestart }: ResultProps) {
                                     <div className="text-pink-500 mb-2"><HeartHandshake size={20} /></div>
                                     <p className="text-[8px] font-black text-pink-300 mb-3 uppercase tracking-widest">Ultimate Match</p>
 
-                                    <div className="relative w-full aspect-square mb-3 rounded-2xl overflow-hidden shadow-inner bg-gradient-to-br from-pink-50 to-blue-50 border-2 border-pink-100">
-                                        <AnimalCrossingAvatar
+                                    <div className="relative w-full aspect-square mb-3 rounded-2xl overflow-hidden shadow-inner bg-gradient-to-br from-gray-900 to-gray-800 border-2 border-gray-700">
+                                        <CharacterPortrait
                                             typeId={best.id}
-                                            visual={(best as any).visual}
+                                            design={(best as any).visual}
                                             primaryColor={best.color}
+                                            size="medium"
                                         />
                                         <div className="absolute inset-0 bg-gradient-to-t from-pink-500/20 to-transparent z-10" />
                                     </div>
@@ -137,11 +139,12 @@ export default function ResultComponent({ result, onRestart }: ResultProps) {
                                     <div className="text-gray-400 mb-2"><ShieldAlert size={20} /></div>
                                     <p className="text-[8px] font-black text-gray-300 mb-3 uppercase tracking-widest">Caution Alert</p>
 
-                                    <div className="relative w-full aspect-square mb-3 rounded-2xl overflow-hidden shadow-inner bg-gradient-to-br from-pink-50 to-blue-50 border-2 border-gray-100">
-                                        <AnimalCrossingAvatar
+                                    <div className="relative w-full aspect-square mb-3 rounded-2xl overflow-hidden shadow-inner bg-gradient-to-br from-gray-900 to-gray-800 border-2 border-gray-700">
+                                        <CharacterPortrait
                                             typeId={worst.id}
-                                            visual={(worst as any).visual}
+                                            design={(worst as any).visual}
                                             primaryColor={worst.color}
+                                            size="medium"
                                         />
                                         <div className="absolute inset-0 bg-gradient-to-t from-gray-900/10 to-transparent z-10" />
                                     </div>
