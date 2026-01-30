@@ -117,17 +117,30 @@ export default function ResultComponent({ result, onRestart }: ResultProps) {
 
                             {/* Compatibility */}
                             <section className="grid grid-cols-2 gap-4">
-                                <div className="bg-pink-50 p-6 rounded-[32px] border border-pink-100 text-center shadow-sm">
-                                    <div className="flex justify-center mb-3 text-pink-500"><HeartHandshake size={28} /></div>
-                                    <p className="text-[10px] font-black text-pink-300 mb-2 uppercase tracking-tighter">Ultimate Compatibility</p>
-                                    <p className="text-sm font-black text-gray-700 leading-tight mb-2">{best.name}</p>
-                                    <p className="text-2xl">{best.emoji}</p>
+                                <div className="bg-pink-50 p-4 rounded-[32px] border border-pink-100 text-center shadow-sm flex flex-col items-center">
+                                    <div className="text-pink-500 mb-2"><HeartHandshake size={20} /></div>
+                                    <p className="text-[8px] font-black text-pink-300 mb-3 uppercase tracking-widest">Ultimate Match</p>
+
+                                    <div className="relative w-full aspect-square mb-3 rounded-2xl overflow-hidden shadow-inner bg-white border border-pink-50">
+                                        <Image src={best.imagePath} alt={best.name} fill className="object-cover" />
+                                        <div className="absolute inset-0 bg-gradient-to-t from-pink-500/20 to-transparent" />
+                                    </div>
+
+                                    <p className="text-[11px] font-black text-gray-700 leading-tight mb-1">{best.name}</p>
+                                    <p className="text-lg">{best.emoji}</p>
                                 </div>
-                                <div className="bg-gray-50 p-6 rounded-[32px] border border-gray-100 text-center shadow-sm">
-                                    <div className="flex justify-center mb-3 text-gray-400"><ShieldAlert size={28} /></div>
-                                    <p className="text-[10px] font-black text-gray-300 mb-2 uppercase tracking-tighter">Caution Alert</p>
-                                    <p className="text-sm font-black text-gray-700 leading-tight mb-2">{worst.name}</p>
-                                    <p className="text-2xl">{worst.emoji}</p>
+
+                                <div className="bg-gray-50 p-4 rounded-[32px] border border-gray-100 text-center shadow-sm flex flex-col items-center">
+                                    <div className="text-gray-400 mb-2"><ShieldAlert size={20} /></div>
+                                    <p className="text-[8px] font-black text-gray-300 mb-3 uppercase tracking-widest">Caution Alert</p>
+
+                                    <div className="relative w-full aspect-square mb-3 rounded-2xl overflow-hidden shadow-inner bg-white border border-gray-100">
+                                        <Image src={worst.imagePath} alt={worst.name} fill className="object-cover grayscale-[0.5]" />
+                                        <div className="absolute inset-0 bg-gradient-to-t from-gray-900/10 to-transparent" />
+                                    </div>
+
+                                    <p className="text-[11px] font-black text-gray-700 leading-tight mb-1">{worst.name}</p>
+                                    <p className="text-lg">{worst.emoji}</p>
                                 </div>
                             </section>
 
