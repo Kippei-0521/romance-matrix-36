@@ -1,9 +1,11 @@
+```javascript
 "use client";
 
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import QuizComponent from '../components/QuizComponent';
 import { Heart, Grid, Sparkles } from 'lucide-react';
+import Image from 'next/image';
 import { personalityTypes, X_AXES, Y_AXES } from '../lib/quizData';
 
 export default function Home() {
@@ -23,7 +25,7 @@ export default function Home() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
-            className="w-full max-w-4xl flex flex-col items-center z-10 py-12 md:py-20"
+            className="w-full max-w-6xl flex flex-col items-center z-10 py-12 md:py-20"
           >
             <div className="text-center mb-12 md:mb-16">
               <div className="mb-8 relative inline-block">
@@ -97,18 +99,6 @@ export default function Home() {
               ))}
             </div>
 
-            {/* Matrix Preview */}
-            <div className="w-full bg-white p-10 rounded-[60px] shadow-2xl border-4 border-white mb-20">
-              <div className="flex flex-col items-center mb-10 text-center">
-                <div className="bg-pink-50 px-4 py-1 rounded-full mb-4">
-                  <p className="text-[10px] font-black text-pink-500 uppercase tracking-[0.3em]">Full Comparison Matrix</p>
-                </div>
-                <h3 className="text-2xl font-black text-gray-800">全36タイプの類型的分類</h3>
-                <p className="text-gray-400 text-xs mt-2">横軸：深層価値観 × 縦軸：恋愛スタイル</p>
-              </div>
-
-              <div className="min-w-[500px]">
-                <table className="w-full border-separate border-spacing-2">
                   <thead>
                     <tr>
                       <th className="w-16"></th>
@@ -122,13 +112,13 @@ export default function Home() {
                       <tr key={y}>
                         <td className="text-[10px] font-black text-gray-400 uppercase text-right pr-2">{y}</td>
                         {X_AXES.map(x => {
-                          const id = `${x.toLowerCase()}-${y.toLowerCase()}`;
+                          const id = `${ x.toLowerCase() } -${ y.toLowerCase() } `;
                           const type = personalityTypes[id];
                           return (
                             <td key={id} className="p-1">
                               <div
                                 className="h-10 rounded-xl flex items-center justify-center text-lg shadow-sm border border-white/50"
-                                style={{ backgroundColor: `${type.color}33` }}
+                                style={{ backgroundColor: `${ type.color } 33` }}
                                 title={type.name}
                               >
                                 {type.emoji}
