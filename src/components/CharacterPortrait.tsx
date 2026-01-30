@@ -30,117 +30,171 @@ interface CharacterPortraitProps {
 export default function CharacterPortrait({ typeId, design, primaryColor, size = "medium", className = "" }: CharacterPortraitProps) {
     const { hairColor, skinTone, outfitColors, archetype, weapon, accessories } = design;
 
-    // Derived group colors based on archetype or typeId
-    const getGroupColor = () => {
+    // --- Color Quadrants (MBTI Official) ---
+    const getGroupColors = () => {
         const id = typeId.toLowerCase();
-        if (id.includes('analytical') || id.includes('enigmatic')) return { base: '#a685e2', light: '#d1c4e9', dark: '#7e57c2' }; // Analyst Purple
-        if (id.includes('romantic') || id.includes('altruistic')) return { base: '#a4d4ae', light: '#c8e6c9', dark: '#66bb6a' }; // Diplomat Green
-        if (id.includes('formal') || id.includes('traditional')) return { base: '#7eb5d6', light: '#bbdefb', dark: '#42a5f5' }; // Sentinel Blue
-        return { base: '#f2d06b', light: '#fff9c4', dark: '#fbc02d' }; // Explorer Yellow
+        // Analysts (Purple)
+        if (id.includes('analytical') || id.includes('enigmatic')) {
+            return { base: '#a685e2', light: '#c9b7eb', dark: '#8a65cd', bg: '#f3efff' };
+        }
+        // Diplomats (Green)
+        if (id.includes('romantic') || id.includes('altruistic')) {
+            return { base: '#a4d4ae', light: '#c9e6ce', dark: '#7cb387', bg: '#f1f9f2' };
+        }
+        // Sentinels (Blue)
+        if (id.includes('formal') || id.includes('traditional')) {
+            return { base: '#7eb5d6', light: '#b0d4eb', dark: '#5c94b5', bg: '#f0f7fb' };
+        }
+        // Explorers (Yellow)
+        return { base: '#f2d06b', light: '#f7e1a0', dark: '#d4b44a', bg: '#fffbf0' };
     };
 
-    const colors = getGroupColor();
+    const colors = getGroupColors();
+
+    // Helper for shaded facets
+    const ShadedPath = ({ d, color, shade = 0.1 }: { d: string; color: string; shade?: number }) => (
+        <g>
+            <path d={d} fill={color} />
+            <path d={d} fill="#000" opacity={shade} />
+        </g>
+    );
 
     return (
-        <div className={`relative w-full h-full flex items-center justify-center p-4 bg-gray-50/50 rounded-3xl overflow-hidden ${className}`}>
-            {/* Background Block */}
+        <div className={`relative w-full h-full flex items-center justify-center p-4 rounded-[40px] overflow-hidden ${className}`} style={{ backgroundColor: colors.bg }}>
+            {/* Background Accent */}
             <div
-                className="absolute inset-0 opacity-10"
+                className="absolute inset-x-0 bottom-0 top-1/2 opacity-20"
                 style={{ backgroundColor: colors.base }}
             />
 
-            {/* Geometric Character SVG */}
+            {/* Geometric MBTI Character SVG */}
             <motion.svg
                 viewBox="0 0 200 240"
-                className="w-full h-full relative z-10 filter drop-shadow-md"
-                initial={{ opacity: 0, scale: 0.9 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ duration: 0.5 }}
+                className="w-full h-full relative z-10"
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6 }}
             >
                 {/* Ground Shadow */}
-                <ellipse cx="100" cy="220" rx="40" ry="8" fill="#000" opacity="0.1" />
+                <ellipse cx="100" cy="225" rx="45" ry="10" fill="#000" opacity="0.05" />
 
-                {/* --- Body Structure --- */}
-
-                {/* Legs (Simple Rectangles) */}
-                <g fill={outfitColors[1] || '#444'}>
-                    <rect x="85" y="180" width="12" height="35" rx="2" />
-                    <rect x="103" y="180" width="12" height="35" rx="2" />
-                    {/* Leg Shadow */}
-                    <path d="M 85 180 L 92 180 L 92 215 L 85 215 Z" fill="#000" opacity="0.1" />
+                {/* --- Legs --- */}
+                <g>
+                    {/* Left Leg */}
+                    <path d="M 85 185 L 95 185 L 95 220 L 85 220 Z" fill={outfitColors[1] || '#444'} />
+                    <path d="M 85 185 L 90 185 L 90 220 L 85 220 Z" fill="#000" opacity="0.1" />
+                    {/* Right Leg */}
+                    <path d="M 105 185 L 115 185 L 115 220 L 105 220 Z" fill={outfitColors[1] || '#444'} />
+                    <path d="M 105 185 L 110 185 L 110 220 L 105 220 Z" fill="#000" opacity="0.1" />
                 </g>
 
-                {/* Torso (Geometric Trapezoid) */}
-                <path
-                    d="M 70 115 L 130 115 L 135 185 L 65 185 Z"
-                    fill={outfitColors[0] || colors.base}
-                />
-                {/* Torso Shadow */}
-                <path d="M 70 115 L 85 115 L 85 185 L 65 185 Z" fill="#000" opacity="0.1" />
-
-                {/* --- Head & Face --- */}
-
-                {/* Face Shape (MBTI Angular) */}
-                <path
-                    d="M 65 50 L 135 50 L 135 105 Q 135 115 100 115 Q 65 115 65 105 Z"
-                    fill={skinTone}
-                />
-                {/* Face Shadow */}
-                <path d="M 65 50 L 80 50 L 80 110 Q 65 110 65 105 Z" fill="#000" opacity="0.05" />
-
-                {/* Eyes (Simple Dots) */}
-                <circle cx="90" cy="85" r="3" fill="#333" />
-                <circle cx="120" cy="85" r="3" fill="#333" />
-
-                {/* Mouth (Geometric Line) */}
-                <path d="M 100 100 L 110 100" stroke="#333" strokeOpacity="0.3" strokeWidth="1.5" strokeLinecap="round" />
-
-                {/* --- Hair (Layered Polygons) --- */}
-                <g fill={hairColor}>
-                    {/* Main Mass (Simplified) */}
-                    <path d="M 60 55 L 140 55 L 135 40 L 115 25 L 85 25 L 65 40 Z" />
-                    {/* Side Bangs */}
-                    <path d="M 60 55 L 75 80 L 65 90 Z" />
-                    <path d="M 140 55 L 125 80 L 135 90 Z" />
-                    {/* Hair Highlights/Shadows as Geometric Planes */}
-                    <path d="M 60 55 L 80 55 L 85 25 L 65 40 Z" fill="#fff" opacity="0.15" />
+                {/* --- Torso (Facet Shaded) --- */}
+                <g>
+                    {/* Main Torso */}
+                    <path d="M 70 115 L 130 115 L 140 185 L 60 185 Z" fill={outfitColors[0] || colors.base} />
+                    {/* Side Facet (Shaded) */}
+                    <path d="M 70 115 L 85 115 L 80 185 L 60 185 Z" fill="#000" opacity="0.1" />
+                    {/* Clothing Detail (Tie/Center) */}
+                    <path d="M 98 115 L 102 115 L 105 150 L 95 150 Z" fill="#fff" opacity="0.2" />
                 </g>
 
                 {/* --- Arms --- */}
-                <g fill={outfitColors[0] || colors.base}>
-                    <rect x="55" y="125" width="15" height="40" rx="4" transform="rotate(10 55 125)" />
-                    <rect x="130" y="125" width="15" height="40" rx="4" transform="rotate(-10 130 125)" />
-                    <circle cx="58" cy="170" r="7" fill={skinTone} />
-                    <circle cx="142" cy="170" r="7" fill={skinTone} />
+                <g>
+                    {/* Left Arm */}
+                    <path d="M 70 120 L 50 140 L 55 180 L 70 170 Z" fill={outfitColors[0] || colors.base} />
+                    <path d="M 70 120 L 60 130 L 65 175 L 70 170 Z" fill="#000" opacity="0.15" />
+                    <circle cx="53" cy="180" r="8" fill={skinTone} />
+
+                    {/* Right Arm */}
+                    <path d="M 130 120 L 150 140 L 145 180 L 130 170 Z" fill={outfitColors[0] || colors.base} />
+                    <path d="M 130 120 L 140 130 L 135 175 L 130 170 Z" fill="#000" opacity="0.15" />
+                    <circle cx="147" cy="180" r="8" fill={skinTone} />
                 </g>
 
-                {/* --- Props (Representative geometric items) --- */}
-                <g transform="translate(45, 160)">
-                    {weapon === "Longsword" && (
-                        <path d="M 0 0 L 0 -60 L 5 -65 L 10 -60 L 10 0 Z" fill="#ccc" stroke="#888" strokeWidth="1" />
+                {/* --- Head (Facet Shaded Cubic) --- */}
+                <g transform="translate(0, -5)">
+                    {/* Main Face Shape */}
+                    <path d="M 65 50 L 135 50 L 135 105 Q 135 115 100 115 Q 65 115 65 105 Z" fill={skinTone} />
+                    {/* Side Shading */}
+                    <path d="M 65 50 L 80 50 L 80 110 Q 65 110 65 105 Z" fill="#000" opacity="0.08" />
+
+                    {/* Eyes (Characteristic Slits/Dots) */}
+                    <g>
+                        <circle cx="92" cy="85" r="3.5" fill="#333" />
+                        <circle cx="122" cy="85" r="3.5" fill="#333" />
+                        {/* Eyebrows (Determined/Calm based on archetype) */}
+                        <path d="M 85 78 L 98 80" stroke="#333" strokeWidth="2" strokeLinecap="round" opacity="0.4" />
+                        <path d="M 115 80 L 128 78" stroke="#333" strokeWidth="2" strokeLinecap="round" opacity="0.4" />
+                    </g>
+
+                    {/* Mouth */}
+                    <path d="M 102 102 L 112 102" stroke="#333" strokeWidth="1.5" strokeLinecap="round" opacity="0.3" />
+                </g>
+
+                {/* --- Hair (Low-Poly / Geometric Volume) --- */}
+                <g fill={hairColor} transform="translate(0, -5)">
+                    {/* Main Hair Mass */}
+                    <path d="M 60 55 L 140 55 L 135 30 L 115 15 L 85 15 L 65 30 Z" />
+                    {/* Hair Facets (Depth) */}
+                    <path d="M 60 55 L 85 55 L 85 15 L 65 30 Z" fill="#000" opacity="0.1" />
+                    <path d="M 140 55 L 115 55 L 115 15 L 135 30 Z" fill="#fff" opacity="0.1" />
+
+                    {/* Curls/Spikes (Type specific) */}
+                    {design.hairStyle.includes("spiky") && (
+                        <path d="M 80 15 L 100 0 L 120 15 Z" fill={hairColor} />
                     )}
-                    {weapon === "Magic staff" && (
-                        <g>
-                            <rect x="3" y="-50" width="4" height="60" fill="#8d6e63" />
-                            <circle cx="5" cy="-55" r="8" fill="#4fc3f7" opacity="0.8" />
+                </g>
+
+                {/* --- Props (Matching MBTI official motifs) --- */}
+                <g>
+                    {/* Cake (Consul / Altruistic-Formal motif) */}
+                    {accessories.includes("Cake") && (
+                        <g transform="translate(145, 175)">
+                            <path d="M -15 0 L 15 0 L 12 10 L -12 10 Z" fill="#fff" stroke="#eee" />
+                            <path d="M -15 0 L -15 -10 L 15 -10 L 15 0 Z" fill="#ffb7b2" />
+                            <circle cx="0" cy="-12" r="3" fill="#ff4d6d" />
                         </g>
                     )}
-                    {accessories.includes("Scrolls") && (
-                        <rect x="-5" y="-10" width="20" height="15" fill="#f5f5f5" rx="2" stroke="#ddd" />
+
+                    {/* Umbrella (Consul / Altruistic-Formal motif) */}
+                    {accessories.includes("Umbrella") && (
+                        <g transform="translate(45, 120)">
+                            <path d="M 0 0 L 0 -50" stroke="#8d6e63" strokeWidth="3" />
+                            <path d="M -30 -40 Q 0 -60 30 -40 Z" fill="#b0d4eb" stroke="#5c94b5" />
+                        </g>
                     )}
-                    {accessories.includes("Pen") && (
-                        <path d="M 5 0 L 5 -20 L 7 -22 L 9 -20 L 9 0 Z" fill="#333" />
+
+                    {/* Blueprint (Architect / Analytical-Modern) */}
+                    {accessories.includes("Blueprints") && (
+                        <g transform="translate(140, 160)">
+                            <rect x="-10" y="0" width="25" height="40" fill="#2196f3" rx="2" stroke="#fff" strokeWidth="1" />
+                            <line x1="-5" y1="10" x2="10" y2="10" stroke="#fff" strokeWidth="1" opacity="0.5" />
+                            <line x1="-5" y1="20" x2="10" y2="20" stroke="#fff" strokeWidth="1" opacity="0.5" />
+                        </g>
+                    )}
+
+                    {/* Tools (Virtuoso / Independent-Casual) */}
+                    {accessories.includes("Wrench") && (
+                        <path d="M 145 160 L 155 170 L 150 185 L 140 175 Z" fill="#9e9e9e" stroke="#616161" />
+                    )}
+
+                    {/* Standard Weapon Render */}
+                    {!accessories.includes("Cake") && weapon === "Longsword" && (
+                        <g transform="translate(150, 160)">
+                            <path d="M 0 0 L 0 -60 L 6 -65 L 12 -60 L 12 0 Z" fill="#e0e0e0" stroke="#bdbdbd" />
+                            <path d="M -5 -5 L 17 -5" stroke="#795548" strokeWidth="4" />
+                        </g>
                     )}
                 </g>
 
-                {/* Overlays for Character Name */}
-                <g transform="translate(20, 195)">
-                    <rect x="0" y="0" width="160" height="24" rx="12" fill="white" opacity="0.95" />
+                {/* --- Archetype Label (Vercel Style) --- */}
+                <g transform="translate(20, 200)">
+                    <rect x="0" y="0" width="160" height="26" rx="13" fill="white" opacity="0.9" filter="drop-shadow(0 2px 2px rgba(0,0,0,0.05))" />
                     <text
                         x="80"
-                        y="16"
+                        y="17"
                         textAnchor="middle"
-                        className="text-[10px] font-bold tracking-wider"
+                        className="text-[10px] font-black tracking-widest uppercase"
                         fill={colors.dark}
                     >
                         {archetype}
