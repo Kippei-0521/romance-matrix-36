@@ -178,29 +178,51 @@ export default function ResultComponent({ result, onRestart }: ResultProps) {
                         </div>
 
                         {/* Actions */}
-                        <div className="mt-12 space-y-3">
-                            <button
-                                className="w-full btn-primary flex items-center justify-center gap-3 py-5 text-lg"
-                                onClick={() => {
-                                    const text = `36タイプ恋愛診断結果：私は「${result.name}」でした！✨ あなたは何タイプ？\n#恋愛性格診断 #36タイプ診断`;
-                                    if (navigator.share) {
-                                        navigator.share({ title: '36タイプ恋愛診断', text, url: window.location.href });
-                                    } else {
-                                        navigator.clipboard.writeText(text + " " + window.location.href);
-                                        alert("結果をコピーしました！SNSでシェアしてね✨");
-                                    }
-                                }}
-                            >
-                                <Share2 size={24} />
-                                診断結果をシェア
-                            </button>
-                            <button
-                                onClick={onRestart}
-                                className="w-full flex items-center justify-center gap-2 text-gray-400 font-bold py-4 hover:text-pink-400 transition-colors"
-                            >
-                                <RefreshCw size={18} />
-                                もう一度最初から
-                            </button>
+                        <div className="mt-12 space-y-4">
+                            <div className="text-center px-4">
+                                <p className="text-[10px] font-black text-gray-300 uppercase tracking-[0.2em] mb-4">Share your truth</p>
+                                <div className="grid grid-cols-2 gap-3">
+                                    <button
+                                        onClick={() => {
+                                            const text = encodeURIComponent(`【恋愛36タイプ診断】私の結果は「${result.name}」でした！💖\nあなたの愛の深淵はどこに位置する？\n#恋愛性格診断 #36タイプ診断`);
+                                            const url = encodeURIComponent(window.location.href);
+                                            window.open(`https://twitter.com/intent/tweet?text=${text}&url=${url}`, '_blank');
+                                        }}
+                                        className="bg-black text-white px-4 py-4 rounded-2xl font-black text-[11px] flex items-center justify-center gap-2 hover:scale-[1.02] transition-transform shadow-lg"
+                                    >
+                                        <Share2 size={16} />
+                                        Xでシェア
+                                    </button>
+                                    <button
+                                        onClick={() => {
+                                            const text = encodeURIComponent(`【恋愛36タイプ診断】私の結果は「${result.name}」でした！💖\n${window.location.href}`);
+                                            window.open(`https://social-plugins.line.me/lineit/share?url=${text}`, '_blank');
+                                        }}
+                                        className="bg-[#06C755] text-white px-4 py-4 rounded-2xl font-black text-[11px] flex items-center justify-center gap-2 hover:scale-[1.02] transition-transform shadow-lg"
+                                    >
+                                        <Share2 size={16} />
+                                        LINEで送る
+                                    </button>
+                                </div>
+                            </div>
+
+                            <div className="pt-6 space-y-3">
+                                <button
+                                    onClick={onRestart}
+                                    className="w-full bg-white border-2 border-pink-100 text-pink-500 font-black py-5 rounded-[32px] hover:bg-pink-50 transition-colors flex items-center justify-center gap-3 group"
+                                >
+                                    <RefreshCw className="group-hover:rotate-180 transition-transform duration-500" />
+                                    もう一度診断する
+                                </button>
+
+                                <button
+                                    onClick={() => window.location.reload()}
+                                    className="w-full text-gray-400 font-bold text-[10px] py-4 flex items-center justify-center gap-2 uppercase tracking-widest"
+                                >
+                                    <Grid size={12} />
+                                    全36タイプのマトリックスを見る
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </div>
