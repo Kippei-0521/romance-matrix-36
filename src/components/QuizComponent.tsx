@@ -129,9 +129,9 @@ export default function QuizComponent() {
             <AnimatePresence mode="wait">
                 <motion.div
                     key={currentQuestion.id}
-                    initial={{ y: 20, opacity: 0 }}
-                    animate={{ y: 0, opacity: 1 }}
-                    exit={{ y: -20, opacity: 0 }}
+                    initial={{ scale: 0.95, opacity: 0 }}
+                    animate={{ scale: 1, opacity: 1 }}
+                    exit={{ scale: 1.05, opacity: 0 }}
                     className="w-full"
                 >
                     <div className="glass-card p-8 mb-12 shadow-sm min-h-[160px] flex items-center justify-center">
@@ -140,18 +140,29 @@ export default function QuizComponent() {
                         </h2>
                     </div>
 
-                    <div className="likert-container px-2">
+                    <div className="flex justify-between w-full px-6 mb-2 text-[10px] font-black text-gray-300 uppercase tracking-widest">
+                        <span>Disagree</span>
+                        <span>Agree</span>
+                    </div>
+
+                    <div className="likert-container px-2 bg-white/40 p-6 rounded-[40px] border border-white/60">
                         {LIKERT_OPTIONS.map((opt) => (
                             <div
                                 key={opt.value}
                                 className="likert-option"
                                 onClick={() => handleLevelSelect(opt.value)}
                             >
-                                <div
+                                <motion.div
+                                    whileHover={{ scale: 1.15 }}
+                                    whileTap={{ scale: 0.9 }}
                                     className="likert-circle"
-                                    style={{ width: opt.size, height: opt.size }}
+                                    style={{
+                                        width: opt.size,
+                                        height: opt.size,
+                                        borderColor: opt.value === 0 ? '#eee' : (opt.value > 0 ? '#ffb7c5' : '#a0c4ff')
+                                    }}
                                 />
-                                <span className="likert-label h-4 leading-tight">{opt.label}</span>
+                                <span className="likert-label h-4 leading-tight opacity-0 group-hover:opacity-100 transition-opacity">{opt.label}</span>
                             </div>
                         ))}
                     </div>

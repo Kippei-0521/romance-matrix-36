@@ -23,33 +23,74 @@ export default function Home() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
-            className="w-full max-w-2xl flex flex-col items-center z-10 py-20"
+            className="w-full max-w-4xl flex flex-col items-center z-10 py-12 md:py-20"
           >
-            <div className="text-center mb-16">
+            <div className="text-center mb-12 md:mb-16">
               <div className="mb-8 relative inline-block">
                 <motion.div
-                  animate={{ scale: [1, 1.1, 1] }}
-                  transition={{ duration: 2, repeat: Infinity }}
-                  className="bg-white p-6 rounded-full shadow-2xl shadow-pink-100"
+                  animate={{ scale: [1, 1.05, 1], rotate: [0, 5, -5, 0] }}
+                  transition={{ duration: 4, repeat: Infinity }}
+                  className="bg-white p-6 rounded-[40px] shadow-2xl shadow-pink-100 border-2 border-pink-50"
                 >
-                  <Heart size={64} className="text-pink-500" fill="#ff85a1" />
+                  <Heart size={72} className="text-pink-500" fill="#ff85a1" />
+                </motion.div>
+                <motion.div
+                  animate={{ y: [0, -10, 0] }}
+                  transition={{ duration: 2, repeat: Infinity }}
+                  className="absolute -top-4 -right-4 bg-blue-500 text-white p-2 rounded-2xl shadow-lg"
+                >
+                  <Grid size={24} />
                 </motion.div>
               </div>
 
-              <h1 className="text-5xl font-black text-gray-800 mb-6 tracking-tight">
-                恋愛における<br />
-                <span className="text-pink-500">36タイプ</span>診断
+              <h1 className="text-4xl md:text-6xl font-black text-gray-800 mb-6 tracking-tight leading-tight">
+                愛の深淵を読み解く<br />
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-pink-500 to-blue-400">36タイプ</span>診断
               </h1>
-              <p className="text-gray-500 mb-10 max-w-xs mx-auto leading-relaxed text-sm">
-                あなたの深層心理を「価値軸 × 行動軸」のマトリックスで解き明かします。
+
+              <div className="flex flex-wrap justify-center gap-4 mb-10 text-[11px] font-black uppercase tracking-widest text-gray-400">
+                <span className="bg-white px-3 py-1 rounded-full border border-gray-100 shadow-sm">🕒 所要時間: 約3分</span>
+                <span className="bg-white px-3 py-1 rounded-full border border-gray-100 shadow-sm">📊 精度: 36タイプ分析</span>
+                <span className="bg-white px-3 py-1 rounded-full border border-gray-100 shadow-sm">💎 無料診断</span>
+              </div>
+
+              <p className="text-gray-500 mb-12 max-w-md mx-auto leading-loose text-[15px]">
+                あなたの「魂の価値観」と「愛の表現方法」をマトリックスで分析。<br />
+                自分でも気づかなかった「本当の自分」を、36の類型から可視化します。
               </p>
 
               <button
                 onClick={() => setStarted(true)}
-                className="btn-primary text-xl px-12"
+                className="btn-primary text-xl px-16 group relative overflow-hidden"
               >
-                診断をスタートして自分のタイプを知る
+                <span className="relative z-10">診断をスタートする</span>
+                <motion.div
+                  className="absolute inset-0 bg-white/20 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-500"
+                />
               </button>
+            </div>
+
+            {/* How it works */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-20 w-full px-4">
+              {[
+                { icon: <Heart className="text-pink-400" />, title: "25の深層質問", desc: "科学的なアプローチで、あなたの潜在的な恋愛傾向を抽出します。" },
+                { icon: <Grid className="text-blue-400" />, title: "36マトリックス", desc: "価値軸と行動軸の掛け合わせで、類を見ない詳細な分析を行います。" },
+                { icon: <span className="text-2xl">✨</span>, title: "真実のカルテ", desc: "あなたの強み、注意点、そして運命の相性を詳細に解説します。" }
+              ].map((item, i) => (
+                <motion.div
+                  key={i}
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.2 * i }}
+                  className="bg-white/60 p-6 rounded-[32px] border border-white/80 shadow-sm text-center"
+                >
+                  <div className="bg-white w-12 h-12 rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-sm border border-pink-50">
+                    {item.icon}
+                  </div>
+                  <h4 className="font-black text-gray-800 mb-2">{item.title}</h4>
+                  <p className="text-[12px] text-gray-500 leading-relaxed">{item.desc}</p>
+                </motion.div>
+              ))}
             </div>
 
             {/* Matrix Preview Table */}
