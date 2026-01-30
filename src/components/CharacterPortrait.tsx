@@ -28,173 +28,125 @@ interface CharacterPortraitProps {
 }
 
 export default function CharacterPortrait({ typeId, design, primaryColor, size = "medium", className = "" }: CharacterPortraitProps) {
-    const { hairColor, skinTone, outfitColors, archetype, accessories } = design;
+    const { hairColor, skinTone, outfitColors, archetype, weapon, accessories } = design;
 
-    const sizeClasses = {
-        small: "w-full h-full",
-        medium: "w-full h-full",
-        large: "w-full h-full"
+    // Derived group colors based on archetype or typeId
+    const getGroupColor = () => {
+        const id = typeId.toLowerCase();
+        if (id.includes('analytical') || id.includes('enigmatic')) return { base: '#a685e2', light: '#d1c4e9', dark: '#7e57c2' }; // Analyst Purple
+        if (id.includes('romantic') || id.includes('altruistic')) return { base: '#a4d4ae', light: '#c8e6c9', dark: '#66bb6a' }; // Diplomat Green
+        if (id.includes('formal') || id.includes('traditional')) return { base: '#7eb5d6', light: '#bbdefb', dark: '#42a5f5' }; // Sentinel Blue
+        return { base: '#f2d06b', light: '#fff9c4', dark: '#fbc02d' }; // Explorer Yellow
     };
 
-    // MBTI-style characters are often pill-shaped or have very soft, rounded bodies
-    // with distinctive hair/hats that define their role.
+    const colors = getGroupColor();
 
     return (
-        <div className={`relative ${sizeClasses[size]} ${className}`}>
-            {/* 🌸 Romantic Pastel Glow Background */}
+        <div className={`relative w-full h-full flex items-center justify-center p-4 bg-gray-50/50 rounded-3xl overflow-hidden ${className}`}>
+            {/* Background Block */}
             <div
-                className="absolute inset-0 rounded-[40px] opacity-25 blur-3xl"
-                style={{
-                    background: `linear-gradient(135deg, ${primaryColor}80, #ffb7b280, #e0b0ff80)`
-                }}
+                className="absolute inset-0 opacity-10"
+                style={{ backgroundColor: colors.base }}
             />
 
-            {/* ✨ Floating Decoration */}
-            <div className="absolute inset-0 pointer-events-none overflow-hidden rounded-[40px]">
-                {[...Array(3)].map((_, i) => (
-                    <motion.div
-                        key={i}
-                        className="absolute text-2xl"
-                        style={{
-                            left: `${20 + i * 30}%`,
-                            top: `${15 + (i % 2) * 50}%`,
-                            opacity: 0.4
-                        }}
-                        animate={{
-                            y: [0, -15, 0],
-                            opacity: [0.2, 0.5, 0.2],
-                            scale: [1, 1.2, 1]
-                        }}
-                        transition={{
-                            duration: 4 + i,
-                            repeat: Infinity,
-                            ease: "easeInOut"
-                        }}
-                    >
-                        {i % 2 === 0 ? '✨' : '🌸'}
-                    </motion.div>
-                ))}
-            </div>
-
-            {/* 3D Modern Human Icon (MBTI Inspiration) */}
+            {/* Geometric Character SVG */}
             <motion.svg
                 viewBox="0 0 200 240"
-                className="w-full h-full relative z-10"
-                initial={{ opacity: 0, scale: 0.95 }}
+                className="w-full h-full relative z-10 filter drop-shadow-md"
+                initial={{ opacity: 0, scale: 0.9 }}
                 animate={{ opacity: 1, scale: 1 }}
-                transition={{ duration: 0.7, ease: "easeOut" }}
+                transition={{ duration: 0.5 }}
             >
-                <defs>
-                    {/* 3D Lighting Gradients */}
-                    <linearGradient id={`bodyGrad-${typeId}`} x1="0%" y1="0%" x2="100%" y2="100%">
-                        <stop offset="0%" stopColor={outfitColors[0] || primaryColor} />
-                        <stop offset="100%" stopColor={outfitColors[1] || primaryColor} stopOpacity="0.8" />
-                    </linearGradient>
+                {/* Ground Shadow */}
+                <ellipse cx="100" cy="220" rx="40" ry="8" fill="#000" opacity="0.1" />
 
-                    <linearGradient id={`skinGrad-${typeId}`} x1="0%" y1="0%" x2="0%" y2="100%">
-                        <stop offset="0%" stopColor="#ffffff" stopOpacity="0.4" />
-                        <stop offset="100%" stopColor={skinTone} />
-                    </linearGradient>
+                {/* --- Body Structure --- */}
 
-                    <filter id={`shadow-${typeId}`}>
-                        <feDropShadow dx="0" dy="4" stdDeviation="5" floodOpacity="0.1" />
-                    </filter>
+                {/* Legs (Simple Rectangles) */}
+                <g fill={outfitColors[1] || '#444'}>
+                    <rect x="85" y="180" width="12" height="35" rx="2" />
+                    <rect x="103" y="180" width="12" height="35" rx="2" />
+                    {/* Leg Shadow */}
+                    <path d="M 85 180 L 92 180 L 92 215 L 85 215 Z" fill="#000" opacity="0.1" />
+                </g>
 
-                    <filter id={`glow-${typeId}`}>
-                        <feGaussianBlur stdDeviation="3" result="blur" />
-                        <feMerge>
-                            <feMergeNode in="blur" />
-                            <feMergeNode in="SourceGraphic" />
-                        </feMerge>
-                    </filter>
-                </defs>
-
-                {/* Shadow */}
-                <ellipse cx="100" cy="225" rx="50" ry="8" fill="#000" opacity="0.05" />
-
-                {/* 🧘 Body (Smooth pill shape / Minimalist 3D) */}
-                <motion.path
-                    d="M 60 140 Q 60 110 100 110 Q 140 110 140 140 L 145 200 Q 145 220 100 220 Q 55 220 55 200 Z"
-                    fill={`url(#bodyGrad-${typeId})`}
-                    filter={`url(#shadow-${typeId})`}
-                    stroke="#ffffff30"
-                    strokeWidth="1"
+                {/* Torso (Geometric Trapezoid) */}
+                <path
+                    d="M 70 115 L 130 115 L 135 185 L 65 185 Z"
+                    fill={outfitColors[0] || colors.base}
                 />
+                {/* Torso Shadow */}
+                <path d="M 70 115 L 85 115 L 85 185 L 65 185 Z" fill="#000" opacity="0.1" />
 
-                {/* Arms (Simplified) */}
-                <g>
-                    <path d="M 65 145 Q 45 155 45 180" fill="none" stroke={`url(#bodyGrad-${typeId})`} strokeWidth="18" strokeLinecap="round" opacity="0.9" />
-                    <path d="M 135 145 Q 155 155 155 180" fill="none" stroke={`url(#bodyGrad-${typeId})`} strokeWidth="18" strokeLinecap="round" opacity="0.9" />
+                {/* --- Head & Face --- */}
+
+                {/* Face Shape (MBTI Angular) */}
+                <path
+                    d="M 65 50 L 135 50 L 135 105 Q 135 115 100 115 Q 65 115 65 105 Z"
+                    fill={skinTone}
+                />
+                {/* Face Shadow */}
+                <path d="M 65 50 L 80 50 L 80 110 Q 65 110 65 105 Z" fill="#000" opacity="0.05" />
+
+                {/* Eyes (Simple Dots) */}
+                <circle cx="90" cy="85" r="3" fill="#333" />
+                <circle cx="120" cy="85" r="3" fill="#333" />
+
+                {/* Mouth (Geometric Line) */}
+                <path d="M 100 100 L 110 100" stroke="#333" strokeOpacity="0.3" strokeWidth="1.5" strokeLinecap="round" />
+
+                {/* --- Hair (Layered Polygons) --- */}
+                <g fill={hairColor}>
+                    {/* Main Mass (Simplified) */}
+                    <path d="M 60 55 L 140 55 L 135 40 L 115 25 L 85 25 L 65 40 Z" />
+                    {/* Side Bangs */}
+                    <path d="M 60 55 L 75 80 L 65 90 Z" />
+                    <path d="M 140 55 L 125 80 L 135 90 Z" />
+                    {/* Hair Highlights/Shadows as Geometric Planes */}
+                    <path d="M 60 55 L 80 55 L 85 25 L 65 40 Z" fill="#fff" opacity="0.15" />
                 </g>
 
-                {/* 👤 Head (Perfectly round iconic head) */}
-                <g filter={`url(#shadow-${typeId})`}>
-                    <circle cx="100" cy="75" r="45" fill={`url(#skinGrad-${typeId})`} />
-
-                    {/* Hair / Hat (Characteristic Silhouette) */}
-                    <path
-                        d="M 55 75 Q 55 30 100 30 Q 145 30 145 75 L 140 85 L 60 85 Z"
-                        fill={hairColor}
-                        opacity="0.9"
-                    />
-
-                    {/* Eyes (Simple iconic dots) */}
-                    <circle cx="85" cy="78" r="3.5" fill="#333" opacity="0.7" />
-                    <circle cx="115" cy="78" r="3.5" fill="#333" opacity="0.7" />
-
-                    {/* Cheeks */}
-                    <circle cx="78" cy="85" r="5" fill="#ff9aa2" opacity="0.3" />
-                    <circle cx="122" cy="85" r="5" fill="#ff9aa2" opacity="0.3" />
-
-                    {/* Subtle Smile */}
-                    <path d="M 92 92 Q 100 96 108 92" fill="none" stroke="#333" strokeOpacity="0.4" strokeWidth="2" strokeLinecap="round" />
+                {/* --- Arms --- */}
+                <g fill={outfitColors[0] || colors.base}>
+                    <rect x="55" y="125" width="15" height="40" rx="4" transform="rotate(10 55 125)" />
+                    <rect x="130" y="125" width="15" height="40" rx="4" transform="rotate(-10 130 125)" />
+                    <circle cx="58" cy="170" r="7" fill={skinTone} />
+                    <circle cx="142" cy="170" r="7" fill={skinTone} />
                 </g>
 
-                {/* 🎩 Accessories (Based on Archetype) */}
-                {accessories.includes("Crown") && (
-                    <path d="M 85 35 L 90 25 L 100 35 L 110 25 L 115 35 Z" fill="#ffd700" stroke="#ffaa00" strokeWidth="1" />
-                )}
-
-                {accessories.includes("Glasses") && (
-                    <g transform="translate(0, 78)">
-                        <circle cx="85" cy="0" r="10" fill="none" stroke="#333" strokeWidth="1.5" opacity="0.5" />
-                        <circle cx="115" cy="0" r="10" fill="none" stroke="#333" strokeWidth="1.5" opacity="0.5" />
-                        <line x1="95" y1="0" x2="105" y2="0" stroke="#333" strokeWidth="1.5" opacity="0.5" />
-                    </g>
-                )}
-
-                {/* 🎨 Outfit Detail / Symbol */}
-                <g opacity="0.4">
-                    <circle cx="100" cy="150" r="12" fill="white" />
-                    <path d="M 100 144 L 100 156 M 94 150 L 106 150" stroke={primaryColor} strokeWidth="2" />
+                {/* --- Props (Representative geometric items) --- */}
+                <g transform="translate(45, 160)">
+                    {weapon === "Longsword" && (
+                        <path d="M 0 0 L 0 -60 L 5 -65 L 10 -60 L 10 0 Z" fill="#ccc" stroke="#888" strokeWidth="1" />
+                    )}
+                    {weapon === "Magic staff" && (
+                        <g>
+                            <rect x="3" y="-50" width="4" height="60" fill="#8d6e63" />
+                            <circle cx="5" cy="-55" r="8" fill="#4fc3f7" opacity="0.8" />
+                        </g>
+                    )}
+                    {accessories.includes("Scrolls") && (
+                        <rect x="-5" y="-10" width="20" height="15" fill="#f5f5f5" rx="2" stroke="#ddd" />
+                    )}
+                    {accessories.includes("Pen") && (
+                        <path d="M 5 0 L 5 -20 L 7 -22 L 9 -20 L 9 0 Z" fill="#333" />
+                    )}
                 </g>
 
-                {/* Character Label Background */}
-                <g transform="translate(20, 205)">
-                    <rect x="0" y="0" width="160" height="28" rx="14" fill="white" opacity="0.9" />
+                {/* Overlays for Character Name */}
+                <g transform="translate(20, 195)">
+                    <rect x="0" y="0" width="160" height="24" rx="12" fill="white" opacity="0.95" />
                     <text
                         x="80"
-                        y="18"
+                        y="16"
                         textAnchor="middle"
-                        className="text-[10px] font-black uppercase tracking-[0.1em]"
-                        fill="#555"
+                        className="text-[10px] font-bold tracking-wider"
+                        fill={colors.dark}
                     >
                         {archetype}
                     </text>
                 </g>
             </motion.svg>
-
-            {/* 🎇 Sparkle particles */}
-            <motion.div
-                className="absolute bottom-6 left-1/2 -translate-x-1/2 flex gap-1"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: 0.5 }}
-            >
-                <div className="w-1.5 h-1.5 rounded-full bg-white opacity-50" />
-                <div className="w-1.5 h-1.5 rounded-full bg-white opacity-30" />
-                <div className="w-1.5 h-1.5 rounded-full bg-white opacity-10" />
-            </motion.div>
         </div>
     );
 }
