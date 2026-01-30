@@ -120,6 +120,45 @@ const UNIQUE_CHARACTERS: Record<string, string> = {
     "vibrant-stoic": "不滅の冒険家"
 };
 
+const CHARACTER_VISUALS: Record<string, { symbol: string; pattern: string; colorSecondary: string }> = {
+    "romantic-traditional": { symbol: "Sword", pattern: "Shield", colorSecondary: "#ff4d6d" },
+    "romantic-modern": { symbol: "Heads", pattern: "City", colorSecondary: "#ff758f" },
+    "romantic-casual": { symbol: "Feather", pattern: "Wind", colorSecondary: "#ff85a1" },
+    "romantic-formal": { symbol: "Crown", pattern: "Silk", colorSecondary: "#c9184a" },
+    "romantic-creative": { symbol: "Sparkles", pattern: "Stars", colorSecondary: "#ffb3c1" },
+    "romantic-stoic": { symbol: "Flame", pattern: "Ash", colorSecondary: "#a4161a" },
+    "analytical-traditional": { symbol: "Library", pattern: "Scroll", colorSecondary: "#0077b6" },
+    "analytical-modern": { symbol: "Cpu", pattern: "Grid", colorSecondary: "#00b4d8" },
+    "analytical-casual": { symbol: "Eye", pattern: "Mist", colorSecondary: "#90e0ef" },
+    "analytical-formal": { symbol: "Gavel", pattern: "Law", colorSecondary: "#03045e" },
+    "analytical-creative": { symbol: "Zap", pattern: "Pulse", colorSecondary: "#caf0f8" },
+    "analytical-stoic": { symbol: "Diamond", pattern: "Stone", colorSecondary: "#023e8a" },
+    "independent-traditional": { symbol: "Mountain", pattern: "Peak", colorSecondary: "#fb8500" },
+    "independent-modern": { symbol: "Rocket", pattern: "Space", colorSecondary: "#ffb703" },
+    "independent-casual": { symbol: "Compass", pattern: "Map", colorSecondary: "#8ecae6" },
+    "independent-formal": { symbol: "ScrollText", pattern: "Ink", colorSecondary: "#219ebc" },
+    "independent-creative": { symbol: "Palette", pattern: "Paint", colorSecondary: "#023047" },
+    "independent-stoic": { symbol: "Book", pattern: "Pages", colorSecondary: "#000000" },
+    "altruistic-traditional": { symbol: "Church", pattern: "Light", colorSecondary: "#7209b7" },
+    "altruistic-modern": { symbol: "Users", pattern: "Network", colorSecondary: "#3a0ca3" },
+    "altruistic-casual": { symbol: "Coffee", pattern: "Steam", colorSecondary: "#4361ee" },
+    "altruistic-formal": { symbol: "Key", pattern: "Lock", colorSecondary: "#4cc9f0" },
+    "altruistic-creative": { symbol: "Sun", pattern: "Rays", colorSecondary: "#f72585" },
+    "altruistic-stoic": { symbol: "ShieldCheck", pattern: "Armor", colorSecondary: "#b5179e" },
+    "enigmatic-traditional": { symbol: "Scroll", pattern: "Ancient", colorSecondary: "#3c096c" },
+    "enigmatic-modern": { symbol: "Wand", pattern: "Magic", colorSecondary: "#5a189a" },
+    "enigmatic-casual": { symbol: "Masks", pattern: "Shadow", colorSecondary: "#7b2cbf" },
+    "enigmatic-formal": { symbol: "Snowflake", pattern: "Ice", colorSecondary: "#9d4edd" },
+    "enigmatic-creative": { symbol: "Ghost", pattern: "Spirit", colorSecondary: "#c77dff" },
+    "enigmatic-stoic": { symbol: "Moon", pattern: "Night", colorSecondary: "#240046" },
+    "vibrant-traditional": { symbol: "Trophy", pattern: "Gold", colorSecondary: "#ff9f1c" },
+    "vibrant-modern": { symbol: "Music", pattern: "Vinyl", colorSecondary: "#ffbf69" },
+    "vibrant-casual": { symbol: "Gamepad", pattern: "Pixels", colorSecondary: "#ffffff" },
+    "vibrant-formal": { symbol: "GlassWater", pattern: "Toast", colorSecondary: "#2ec4b6" },
+    "vibrant-creative": { symbol: "Lightbulb", pattern: "Idea", colorSecondary: "#cbf3f0" },
+    "vibrant-stoic": { symbol: "Footprints", pattern: "Path", colorSecondary: "#ff5400" }
+};
+
 export const personalityTypes: Record<string, PersonalityType> = {};
 
 // Generate 36 Types with sophisticated long-form content
@@ -130,13 +169,14 @@ X_AXES.forEach((x, xIdx) => {
         const yInfo = Y_PSYCHOLOGY[y];
         const xDetail = X_DETAILS[x];
         const yDetail = Y_DETAILS[y];
+        const visual = CHARACTER_VISUALS[id] || { symbol: "User", pattern: "Circles", colorSecondary: "#cccccc" };
 
         personalityTypes[id] = {
             id,
             name: `${xDetail.name}の${yDetail.name}`,
             emoji: xDetail.emoji,
             characterName: UNIQUE_CHARACTERS[id] || `${xDetail.name}の執行官`,
-            imagePath: getFallbackImage(x),
+            imagePath: getFallbackImage(x), // Kept for backward compatibility, but we use SVG now
             description: `あなたは「${xInfo.essence}」を魂の核に持ちながら、現実世界では「${yInfo.mode}」というドレスを纏って愛を語るタイプです。人々はあなたの${yDetail.name}に惹かれますが、その奥に潜む${xDetail.name}の深淵を知った時、真の衝撃を受けることになります。`,
             innerPsychology: `あなたの内面では、常に「${xInfo.desire}」という渇望が渦巻いています。恋愛において、あなたは単なるパートナーシップ以上のものを求めています。それは魂の交感であり、世界が反転するような体験です。しかし、同時に「${xInfo.fear}」という根源的な恐怖が、あなたに慎重さを強いています。この二律背反が、あなたの醸し出す独特の「重み」の正体です。`,
             shadowSide: `あなたの「${yInfo.defense}」という防御反応は、時に牙を剥きます。関係が停滞したとき、あなたは無意識のうちに「${yInfo.trap}」という罠に自ら落ちる傾向があります。相手があなたの複雑さを理解できないとき、あなたは独りで迷宮に籠もってしまいます。この孤独なスパイラルから抜け出すには、形式よりも生身の感情を優先する勇気が必要です。`,
@@ -148,6 +188,8 @@ X_AXES.forEach((x, xIdx) => {
             worstMatchId: `analytical-stoic`,
             coordinate: { x, y }
         };
+        // Add visual metadata to the object for use in CharacterAvatar
+        (personalityTypes[id] as any).visual = visual;
     });
 });
 

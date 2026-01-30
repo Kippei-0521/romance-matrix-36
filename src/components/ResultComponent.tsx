@@ -4,7 +4,7 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { PersonalityType, personalityTypes, X_AXES, Y_AXES } from '../lib/quizData';
 import { RefreshCw, Share2, Heart, Star, Sparkles, Wand2, ShieldAlert, HeartHandshake, Map, Grid } from 'lucide-react';
-import Image from 'next/image';
+import CharacterAvatar from './CharacterAvatar';
 
 interface ResultProps {
     result: PersonalityType;
@@ -54,14 +54,10 @@ export default function ResultComponent({ result, onRestart }: ResultProps) {
                             transition={{ delay: 0.2 }}
                             className="relative w-64 h-64 mb-4 rounded-3xl overflow-hidden shadow-2xl border-4 border-white bg-white"
                         >
-                            <Image
-                                src={result.imagePath}
-                                alt={result.characterName}
-                                fill
-                                className="object-cover"
-                                style={{
-                                    filter: `hue-rotate(${X_AXES.indexOf(result.coordinate.x as any) * 10 + Y_AXES.indexOf(result.coordinate.y as any) * 45}deg)`
-                                }}
+                            <CharacterAvatar
+                                typeId={result.id}
+                                visual={(result as any).visual}
+                                primaryColor={result.color}
                             />
                         </motion.div>
 
@@ -125,8 +121,12 @@ export default function ResultComponent({ result, onRestart }: ResultProps) {
                                     <p className="text-[8px] font-black text-pink-300 mb-3 uppercase tracking-widest">Ultimate Match</p>
 
                                     <div className="relative w-full aspect-square mb-3 rounded-2xl overflow-hidden shadow-inner bg-white border border-pink-50">
-                                        <Image src={best.imagePath} alt={best.name} fill className="object-cover" />
-                                        <div className="absolute inset-0 bg-gradient-to-t from-pink-500/20 to-transparent" />
+                                        <CharacterAvatar
+                                            typeId={best.id}
+                                            visual={(best as any).visual}
+                                            primaryColor={best.color}
+                                        />
+                                        <div className="absolute inset-0 bg-gradient-to-t from-pink-500/20 to-transparent z-10" />
                                     </div>
 
                                     <p className="text-[11px] font-black text-gray-700 leading-tight mb-1">{best.name}</p>
@@ -138,8 +138,12 @@ export default function ResultComponent({ result, onRestart }: ResultProps) {
                                     <p className="text-[8px] font-black text-gray-300 mb-3 uppercase tracking-widest">Caution Alert</p>
 
                                     <div className="relative w-full aspect-square mb-3 rounded-2xl overflow-hidden shadow-inner bg-white border border-gray-100">
-                                        <Image src={worst.imagePath} alt={worst.name} fill className="object-cover grayscale-[0.5]" />
-                                        <div className="absolute inset-0 bg-gradient-to-t from-gray-900/10 to-transparent" />
+                                        <CharacterAvatar
+                                            typeId={worst.id}
+                                            visual={(worst as any).visual}
+                                            primaryColor={worst.color}
+                                        />
+                                        <div className="absolute inset-0 bg-gradient-to-t from-gray-900/10 to-transparent z-10" />
                                     </div>
 
                                     <p className="text-[11px] font-black text-gray-700 leading-tight mb-1">{worst.name}</p>
