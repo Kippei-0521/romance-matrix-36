@@ -120,48 +120,48 @@ const UNIQUE_CHARACTERS: Record<string, string> = {
     "vibrant-stoic": "不滅の冒険家"
 };
 
-const CHARACTER_VISUALS: Record<string, { mobType: string; skinColor: string; eyeColor: string; item: string; accessory: string }> = {
-    "romantic-traditional": { mobType: "human", skinColor: "#ffcad4", eyeColor: "#ff4d6d", item: "DiamondSword", accessory: "Helmet" },
-    "romantic-modern": { mobType: "human", skinColor: "#f8edeb", eyeColor: "#3d348b", item: "Rose", accessory: "Headphones" },
-    "romantic-casual": { mobType: "human", skinColor: "#fcd5ce", eyeColor: "#fb6f92", item: "Feather", accessory: "Hat" },
-    "romantic-formal": { mobType: "human", skinColor: "#ffe5d9", eyeColor: "#800f2f", item: "Heart", accessory: "Crown" },
-    "romantic-creative": { mobType: "human", skinColor: "#d8e2dc", eyeColor: "#ff006e", item: "Sparkles", accessory: "Rainbow" },
-    "romantic-stoic": { mobType: "human", skinColor: "#ece4db", eyeColor: "#590d22", item: "Flame", accessory: "Cape" },
+const CHARACTER_VISUALS: Record<string, { animalType: string; furColor: string; eyeColor: string; personality: string; accessory: string }> = {
+    "romantic-traditional": { animalType: "cat", furColor: "#ffcad4", eyeColor: "#ff4d6d", personality: "peppy", accessory: "rose" },
+    "romantic-modern": { animalType: "rabbit", furColor: "#f8edeb", eyeColor: "#3d348b", personality: "normal", accessory: "bow" },
+    "romantic-casual": { animalType: "dog", furColor: "#fcd5ce", eyeColor: "#fb6f92", personality: "lazy", accessory: "scarf" },
+    "romantic-formal": { animalType: "deer", furColor: "#ffe5d9", eyeColor: "#800f2f", personality: "snooty", accessory: "crown" },
+    "romantic-creative": { animalType: "squirrel", furColor: "#d8e2dc", eyeColor: "#ff006e", personality: "peppy", accessory: "flower" },
+    "romantic-stoic": { animalType: "wolf", furColor: "#ece4db", eyeColor: "#590d22", personality: "cranky", accessory: "cape" },
 
-    "analytical-traditional": { mobType: "owl", skinColor: "#d4a373", eyeColor: "#023047", item: "Book", accessory: "Glasses" },
-    "analytical-modern": { mobType: "robot", skinColor: "#e9ecef", eyeColor: "#00b4d8", item: "Compass", accessory: "Antenna" },
-    "analytical-casual": { mobType: "human", skinColor: "#edede9", eyeColor: "#219ebc", item: "Magnifier", accessory: "Scarf" },
-    "analytical-formal": { mobType: "human", skinColor: "#d6ccc2", eyeColor: "#03045e", item: "Scroll", accessory: "Tie" },
-    "analytical-creative": { mobType: "robot", skinColor: "#f8f9fa", eyeColor: "#ff9f1c", item: "Wrench", accessory: "Goggles" },
-    "analytical-stoic": { mobType: "human", skinColor: "#f5ebe0", eyeColor: "#023e8a", item: "Clock", accessory: "Mask" },
+    "analytical-traditional": { animalType: "owl", furColor: "#d4a373", eyeColor: "#023047", personality: "smug", accessory: "glasses" },
+    "analytical-modern": { animalType: "eagle", furColor: "#e9ecef", eyeColor: "#00b4d8", personality: "jock", accessory: "visor" },
+    "analytical-casual": { animalType: "cat", furColor: "#edede9", eyeColor: "#219ebc", personality: "lazy", accessory: "book" },
+    "analytical-formal": { animalType: "penguin", furColor: "#d6ccc2", eyeColor: "#03045e", personality: "smug", accessory: "tie" },
+    "analytical-creative": { animalType: "octopus", furColor: "#f8f9fa", eyeColor: "#ff9f1c", personality: "cranky", accessory: "goggles" },
+    "analytical-stoic": { animalType: "bear", furColor: "#f5ebe0", eyeColor: "#023e8a", personality: "cranky", accessory: "mask" },
 
-    "independent-traditional": { mobType: "wolf", skinColor: "#dee2e6", eyeColor: "#fb8500", item: "Bone", accessory: "Spikes" },
-    "independent-modern": { mobType: "human", skinColor: "#e3f2fd", eyeColor: "#ffb703", item: "Rocket", accessory: "Jetpack" },
-    "independent-casual": { mobType: "cat", skinColor: "#faedcd", eyeColor: "#8ecae6", item: "Fish", accessory: "Bell" },
-    "independent-formal": { mobType: "eagle", skinColor: "#fdf0d5", eyeColor: "#219ebc", item: "Claw", accessory: "EagleHat" },
-    "independent-creative": { mobType: "human", skinColor: "#f1f1f1", eyeColor: "#023047", item: "Palette", accessory: "Beret" },
-    "independent-stoic": { mobType: "human", skinColor: "#e5e5e5", eyeColor: "#000000", item: "Staff", accessory: "Hood" },
+    "independent-traditional": { animalType: "wolf", furColor: "#dee2e6", eyeColor: "#fb8500", personality: "cranky", accessory: "bandana" },
+    "independent-modern": { animalType: "horse", furColor: "#e3f2fd", eyeColor: "#ffb703", personality: "jock", accessory: "sunglasses" },
+    "independent-casual": { animalType: "cat", furColor: "#faedcd", eyeColor: "#8ecae6", personality: "lazy", accessory: "hat" },
+    "independent-formal": { animalType: "eagle", furColor: "#fdf0d5", eyeColor: "#219ebc", personality: "smug", accessory: "monocle" },
+    "independent-creative": { animalType: "squirrel", furColor: "#f1f1f1", eyeColor: "#023047", personality: "peppy", accessory: "beret" },
+    "independent-stoic": { animalType: "gorilla", furColor: "#e5e5e5", eyeColor: "#000000", personality: "cranky", accessory: "hood" },
 
-    "altruistic-traditional": { mobType: "human", skinColor: "#f8f0fb", eyeColor: "#7209b7", item: "Potion", accessory: "Halo" },
-    "altruistic-modern": { mobType: "human", skinColor: "#f1f3f5", eyeColor: "#3a0ca3", item: "Hands", accessory: "Badge" },
-    "altruistic-casual": { mobType: "dog", skinColor: "#fdf0d5", eyeColor: "#4361ee", item: "Cookie", accessory: "Collar" },
-    "altruistic-formal": { mobType: "human", skinColor: "#ffffff", eyeColor: "#4cc9f0", item: "Key", accessory: "Suit" },
-    "altruistic-creative": { mobType: "human", skinColor: "#fff0f3", eyeColor: "#f72585", item: "Sun", accessory: "Flower" },
-    "altruistic-stoic": { mobType: "human", skinColor: "#f8f9fa", eyeColor: "#b5179e", item: "Shield", accessory: "Bracers" },
+    "altruistic-traditional": { animalType: "sheep", furColor: "#f8f0fb", eyeColor: "#7209b7", personality: "normal", accessory: "halo" },
+    "altruistic-modern": { animalType: "dog", furColor: "#f1f3f5", eyeColor: "#3a0ca3", personality: "peppy", accessory: "badge" },
+    "altruistic-casual": { animalType: "dog", furColor: "#fdf0d5", eyeColor: "#4361ee", personality: "lazy", accessory: "collar" },
+    "altruistic-formal": { animalType: "deer", furColor: "#ffffff", eyeColor: "#4cc9f0", personality: "snooty", accessory: "pearls" },
+    "altruistic-creative": { animalType: "rabbit", furColor: "#fff0f3", eyeColor: "#f72585", personality: "peppy", accessory: "flower" },
+    "altruistic-stoic": { animalType: "elephant", furColor: "#f8f9fa", eyeColor: "#b5179e", personality: "normal", accessory: "bracelet" },
 
-    "enigmatic-traditional": { mobType: "enderman", skinColor: "#161a1d", eyeColor: "#9d4edd", item: "EnderEye", accessory: "Smoke" },
-    "enigmatic-modern": { mobType: "human", skinColor: "#212529", eyeColor: "#5a189a", item: "Wand", accessory: "Cape" },
-    "enigmatic-casual": { mobType: "fox", skinColor: "#ffb703", eyeColor: "#fb8500", item: "Berry", accessory: "Tail" },
-    "enigmatic-formal": { mobType: "human", skinColor: "#ced4da", eyeColor: "#3c096c", item: "Snowflake", accessory: "Fur" },
-    "enigmatic-creative": { mobType: "slime", skinColor: "#b5e48c", eyeColor: "#1a7431", item: "SlimeBall", accessory: "Bubbles" },
-    "enigmatic-stoic": { mobType: "human", skinColor: "#343a40", eyeColor: "#240046", item: "Moon", accessory: "Blindfold" },
+    "enigmatic-traditional": { animalType: "cat", furColor: "#161a1d", eyeColor: "#9d4edd", personality: "cranky", accessory: "veil" },
+    "enigmatic-modern": { animalType: "fox", furColor: "#212529", eyeColor: "#5a189a", personality: "smug", accessory: "cape" },
+    "enigmatic-casual": { animalType: "fox", furColor: "#ffb703", eyeColor: "#fb8500", personality: "lazy", accessory: "leaf" },
+    "enigmatic-formal": { animalType: "wolf", furColor: "#ced4da", eyeColor: "#3c096c", personality: "snooty", accessory: "fur_coat" },
+    "enigmatic-creative": { animalType: "octopus", furColor: "#b5e48c", eyeColor: "#1a7431", personality: "peppy", accessory: "bubbles" },
+    "enigmatic-stoic": { animalType: "anteater", furColor: "#343a40", eyeColor: "#240046", personality: "cranky", accessory: "blindfold" },
 
-    "vibrant-traditional": { mobType: "human", skinColor: "#fffbeb", eyeColor: "#fbbf24", item: "Trophy", accessory: "Aura" },
-    "vibrant-modern": { mobType: "human", skinColor: "#fff1f2", eyeColor: "#e11d48", item: "Disc", accessory: "Neon" },
-    "vibrant-casual": { mobType: "human", skinColor: "#ecfdf5", eyeColor: "#10b981", item: "Gamepad", accessory: "PikachuHat" },
-    "vibrant-formal": { mobType: "human", skinColor: "#fef2f2", eyeColor: "#dc2626", item: "Vine", accessory: "GoldChain" },
-    "vibrant-creative": { mobType: "phoenix", skinColor: "#ffedd5", eyeColor: "#ea580c", item: "Lightbulb", accessory: "Fire" },
-    "vibrant-stoic": { mobType: "human", skinColor: "#fafaf9", eyeColor: "#44403c", item: "Boots", accessory: "Backpack" }
+    "vibrant-traditional": { animalType: "lion", furColor: "#fffbeb", eyeColor: "#fbbf24", personality: "jock", accessory: "crown" },
+    "vibrant-modern": { animalType: "tiger", furColor: "#fff1f2", eyeColor: "#e11d48", personality: "peppy", accessory: "headphones" },
+    "vibrant-casual": { animalType: "monkey", furColor: "#ecfdf5", eyeColor: "#10b981", personality: "lazy", accessory: "cap" },
+    "vibrant-formal": { animalType: "peacock", furColor: "#fef2f2", eyeColor: "#dc2626", personality: "snooty", accessory: "feathers" },
+    "vibrant-creative": { animalType: "bird", furColor: "#ffedd5", eyeColor: "#ea580c", personality: "peppy", accessory: "rainbow" },
+    "vibrant-stoic": { animalType: "rhino", furColor: "#fafaf9", eyeColor: "#44403c", personality: "jock", accessory: "backpack" }
 };
 
 export const personalityTypes: Record<string, PersonalityType> = {};
@@ -174,7 +174,7 @@ X_AXES.forEach((x, xIdx) => {
         const yInfo = Y_PSYCHOLOGY[y];
         const xDetail = X_DETAILS[x];
         const yDetail = Y_DETAILS[y];
-        const visual = CHARACTER_VISUALS[id] || { mobType: "human", skinColor: "#ffffff", eyeColor: "#000000", item: "Stick", accessory: "None" };
+        const visual = CHARACTER_VISUALS[id] || { animalType: "cat", furColor: "#ffffff", eyeColor: "#000000", personality: "normal", accessory: "none" };
 
         personalityTypes[id] = {
             id,
