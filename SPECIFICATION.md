@@ -1,141 +1,25 @@
-# 大学生課題自動完了アプリ「UniAuto (仮)」仕様書
+# System Specification - 36-Type Romance Personality Matrix
 
-## 1. プロジェクト概要
-### 1.1 背景・目的
-大学生活において発生する多種多様な課題（レポート、演習問題、プログラミング、語学等）を、AIを活用して効率的かつ高品質に処理する支援ツールを提供する。
-ユーザー（学生）は最小限の入力（テーマや問題の写真）を行うだけで、提出可能なレベルの成果物を得ることを目的とする。
+## 1. Project Overview
+A web-based personality diagnosis application focused on romantic tendencies, utilizing a 6x6 matrix (36 types) to provide high-precision analysis.
 
-### 1.2 ターゲットユーザー
-- 課題の量が多く、時間短縮を求める大学生・大学院生
-- レポート作成やプログラミングに苦手意識を持つ学生
+## 2. Core Features
+- **Quiz System**: 25 questions with 5-point Likert scale.
+- **Matrix Calculation**: Scoring based on Core Value (X-axis) and Relationship Style (Y-axis).
+- **Navigation**: Ability to go back to previous questions.
+- **Results Display**: 
+  - Unique psychological profile for 36 combinations.
+  - Character illustrations for base types.
+  - Compatibility logic (Best/Worst matches).
+- **Global Type Matrix**: Preview of all 36 types on the landing page.
 
----
+## 3. Technical Requirements
+- Next.js App Router for routing and performance.
+- Tailwind CSS v4 for a premium, cute aesthetic.
+- Framer Motion for smooth UI transitions and "floating" elements.
+- Responsive design optimized for mobile (main target).
 
-## 2. 機能要件 (Functional Requirements)
-
-### 2.1 ユーザー認証・管理
-- **アカウント作成・ログイン**: Email/Password認証、Googleソーシャルログイン。
-- **マイページ**: 過去の課題生成履歴の閲覧、保存済みドラフトの管理。
-- **クレジット/トークン制**: 高度なモデル使用時の制限管理（将来的な課金を見据えた設計）。
-
-### 2.2 メイン機能（課題ソルバー）
-アプリは以下の4つのモードを備える。
-
-#### A. レポート・論文生成モード (Report Generator)
-- **入力**: 
-    - 課題テーマ（必須）
-    - 必須キーワード
-    - 文字数指定（例: 1000文字、2000文字）
-    - 文体指定（「だ・である」調、「です・ます」調、アカデミック）
-    - 参考資料（テキスト貼り付け、またはURL）
-- **処理**: 
-    - 章立て（構成案）の自動生成およびユーザー確認・修正。
-    - 各章ごとの本文執筆。
-- **出力**: 
-    - プレビュー画面での編集。
-    - Word (.docx) / PDF / Text 形式でのダウンロード。
-
-#### B. 画像・問題解決モード (Snap & Solve)
-- **入力**: 
-    - プリントや教科書の写真をアップロード（スマホ対応）。
-    - PC画面のスクリーンショット（クリップボードからのペースト対応）。
-    - **文系特化**: 歴史資料、地図、美術品などの画像問題にも対応。
-- **処理**: 
-    - マルチモーダルAIによる画像内容の理解と、関連テキスト（設問）の統合解析。
-    - 選択肢問題（記号選択、正誤判定）の自動解答予測。
-- **出力**: 
-    - 解答とその根拠の提示。
-
-#### C. プログラミング課題モード (Code Assistant)
-- **入力**: 
-    - 問題文（テキスト または 画像）。
-    - 指定言語（Python, Java, C++, JavaScript, etc.）。
-    - 制約条件（ライブラリ使用禁止、など）。
-- **処理**: 
-    - 動作するコードの生成。
-    - コードへのコメント追加。
-    - 実行方法の説明。
-- **出力**: 
-    - シンタックスハイライトされたコードブロック。
-    - コピー機能、ファイル(.py, .c等)ダウンロード。
-
-#### D. 要約・翻訳モード (Summarizer & Translator)
-- **入力**: 
-    - 配布資料ファイル（PDF/Word/PowerPoint）。
-- **処理**: 
-    - 指定文字数への要約。
-    - 専門用語を考慮した翻訳。
-- **出力**: 
-    - 要約テキスト/翻訳テキスト。
-
-#### E. [New] ブラウザ拡張・連携モード (UniAuto Companion)
-- **コンセプト**: 大学のポータルサイト（LMS）上で、ページ移動せずにその場で問題を解決する「最もシームレス」な機能。
-- **機能**:
-    - **ページ内解析**: ブラウザ上の問題文や画像を検出し、サイドパネルに解答を表示。
-    - **選択肢自動ハイライト**: 正解と思われる選択肢をハイライト表示（※補助機能）。
-    - **ワンクリック転記**: 解答欄への入力支援。
-    *※MVP段階では、この機能をWebアプリ上で「ウィンドウを並べて使う」形式で疑似的に再現、あるいは将来的なChrome拡張開発を見据えたAPI設計を行う。*
-
-### 2.3 その他の機能
-- **履歴機能**: 過去に生成した課題を一覧表示し、再編集可能にする。
-- **チャット調整**: 生成結果に対し、「もっと具体例を入れて」「ここは詳しく」等の追加指示をチャット形式で行える機能。
-
----
-
-## 3. 非機能要件 (Non-Functional Requirements)
-- **レスポンス速度**: テキスト生成などの重い処理中も、進捗状況（プログレスバーやローディングアニメーション）を表示し、ユーザーを不安にさせない。
-- **UI/UX**: モダンで直感的なデザイン。「魔法」のような体験（Magical UX）を提供。
-    - カラーパレット: 知的さと落ち着きのあるディープブルーやバイオレットを基調とする。
-- **セキュリティ**: アップロードされた個人情報や課題データのプライバシー保護。
-- **デバイス対応**: PC（執筆メイン）とスマホ（撮影メイン）の完全レスポンシブ対応。
-
----
-
-## 4. 技術スタック (Technology Stack)
-
-### 4.1 Frontend
-- **Framework**: Next.js (App Router)
-- **Language**: TypeScript
-- **Styling**: Tailwind CSS (ユーザー指定のモダンデザイン)
-- **UI Libs**: Radix UI / ShadcnUI (アクセシビリティ担保), Framer Motion (アニメーション)
-
-### 4.2 Backend
-- **Framework**: Next.js API Routes (Server Actions) または Python (FastAPI) 
-    - *※今回は開発速度重視でNext.js Fullstack構成を推奨*
-- **Database**: Supabase (PostgreSQL) 
-    - ユーザーデータ、履歴保存用
-- **Storage**: Supabase Storage / AWS S3
-    - 画像、PDFファイルの一時保存用
-
-### 4.3 AI / ML
-- **LLM**: Google Gemini Pro 1.5 (長文脈対応、コストパフォーマンス良) または OpenAI GPT-4o
-- **OCR**: Google Cloud Vision API または Mathpix (数式に強い場合)
-
----
-
-## 5. デザインコンセプト
-- **テーマ**: "Futuristic Academia"
-- **特徴**: 
-    - グラスモーフィズム（すりガラス効果）を取り入れたカードデザイン。
-    - 鮮やかなグラデーションを使ったアクセント。
-    - 読みやすい美しいタイポグラフィ (Inter, Noto Sans JP)。
-
----
-
-## 6. 開発ロードマップ (MVP)
-1. **Phase 1: 基盤構築**
-   - Next.js プロジェクトセットアップ
-   - Tailwind CSS デザインシステム構築 (colors, fonts)
-   - 基本的な共通レイアウト作成
-
-2. **Phase 2: レポート生成機能の実装**
-   - AI API連携モジュールの作成
-   - 入力フォーム、生成ロジックの実装
-   - 結果表示・編集画面
-
-3. **Phase 3: 認証等の周辺機能**
-   - Supabase連携等は必要に応じて追加（MVPではローカル保存でも可とするか要相談）
-
-4. **Phase 4: ブラッシュアップ**
-   - アニメーション追加
-   - レスポンシブ確認
+## 4. UI/UX Principles
+- **Aesthetic**: Pastel pinks, soft shadows, glassmorphism, and elegant typography.
+- **Interactivity**: Micro-animations on buttons and progress bars.
+- **Readability**: High-quality long-form text layout for results.
