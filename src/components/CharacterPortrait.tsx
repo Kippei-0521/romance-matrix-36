@@ -28,18 +28,7 @@ interface CharacterPortraitProps {
 }
 
 export default function CharacterPortrait({ typeId, design, primaryColor, size = "medium", className = "" }: CharacterPortraitProps) {
-    const { hairColor, eyeColor, outfitColors, archetype } = design;
-
-    // Determine animal type based on personality group
-    const group = typeId.split('-')[0];
-    const species = {
-        romantic: 'cat',
-        analytical: 'fox',
-        independent: 'wolf',
-        altruistic: 'dog',
-        enigmatic: 'rabbit',
-        vibrant: 'bear'
-    }[group] || 'cat';
+    const { hairColor, skinTone, outfitColors, archetype, accessories } = design;
 
     const sizeClasses = {
         small: "w-full h-full",
@@ -47,97 +36,72 @@ export default function CharacterPortrait({ typeId, design, primaryColor, size =
         large: "w-full h-full"
     };
 
-    // Ear shapes for different Animal Crossing species
-    const getEars = () => {
-        switch (species) {
-            case 'cat':
-            case 'fox':
-            case 'wolf':
-                return (
-                    <g>
-                        <path d="M 50 60 L 40 20 L 75 35 Z" fill={hairColor} stroke="#00000010" strokeWidth="2" />
-                        <path d="M 170 60 L 180 20 L 145 35 Z" fill={hairColor} stroke="#00000010" strokeWidth="2" />
-                        <path d="M 55 55 L 48 35 L 70 42 Z" fill="#ffb7b2" opacity="0.6" />
-                        <path d="M 165 55 L 172 35 L 150 42 Z" fill="#ffb7b2" opacity="0.6" />
-                    </g>
-                );
-            case 'rabbit':
-                return (
-                    <g>
-                        <ellipse cx="60" cy="30" rx="12" ry="35" fill={hairColor} stroke="#00000010" strokeWidth="2" transform="rotate(-10 60 30)" />
-                        <ellipse cx="160" cy="30" rx="12" ry="35" fill={hairColor} stroke="#00000010" strokeWidth="2" transform="rotate(10 160 30)" />
-                        <ellipse cx="60" cy="30" rx="6" ry="25" fill="#ffb7b2" opacity="0.5" transform="rotate(-10 60 30)" />
-                        <ellipse cx="160" cy="30" rx="6" ry="25" fill="#ffb7b2" opacity="0.5" transform="rotate(10 160 30)" />
-                    </g>
-                );
-            case 'bear':
-                return (
-                    <g>
-                        <circle cx="55" cy="45" r="22" fill={hairColor} stroke="#00000010" strokeWidth="2" />
-                        <circle cx="165" cy="45" r="22" fill={hairColor} stroke="#00000010" strokeWidth="2" />
-                        <circle cx="55" cy="45" r="12" fill="#ffb7b2" opacity="0.5" />
-                        <circle cx="165" cy="45" r="12" fill="#ffb7b2" opacity="0.5" />
-                    </g>
-                );
-            case 'dog':
-            default:
-                return (
-                    <g>
-                        <ellipse cx="50" cy="70" rx="18" ry="30" fill={hairColor} stroke="#00000010" strokeWidth="2" />
-                        <ellipse cx="170" cy="70" rx="18" ry="30" fill={hairColor} stroke="#00000010" strokeWidth="2" />
-                    </g>
-                );
-        }
-    };
+    // MBTI-style characters are often pill-shaped or have very soft, rounded bodies
+    // with distinctive hair/hats that define their role.
 
     return (
         <div className={`relative ${sizeClasses[size]} ${className}`}>
-            {/* 🌸 Romantic Pastel Background */}
+            {/* 🌸 Romantic Pastel Glow Background */}
             <div
-                className="absolute inset-0 rounded-3xl opacity-30 blur-2xl"
+                className="absolute inset-0 rounded-[40px] opacity-25 blur-3xl"
                 style={{
-                    background: `linear-gradient(135deg, ${primaryColor}70, #ffb7b260, #ffdac160)`
+                    background: `linear-gradient(135deg, ${primaryColor}80, #ffb7b280, #e0b0ff80)`
                 }}
             />
 
-            {/* ✨ Floating Hearts & Sparkles */}
-            <div className="absolute inset-0 pointer-events-none overflow-hidden rounded-3xl">
-                {[...Array(4)].map((_, i) => (
+            {/* ✨ Floating Decoration */}
+            <div className="absolute inset-0 pointer-events-none overflow-hidden rounded-[40px]">
+                {[...Array(3)].map((_, i) => (
                     <motion.div
                         key={i}
-                        className="absolute text-xl"
+                        className="absolute text-2xl"
                         style={{
-                            left: `${15 + i * 25}%`,
-                            top: `${15 + (i % 2) * 40}%`,
-                            opacity: 0.5
+                            left: `${20 + i * 30}%`,
+                            top: `${15 + (i % 2) * 50}%`,
+                            opacity: 0.4
                         }}
                         animate={{
-                            y: [0, -20, 0],
-                            opacity: [0.3, 0.7, 0.3],
-                            scale: [0.9, 1.2, 0.9]
+                            y: [0, -15, 0],
+                            opacity: [0.2, 0.5, 0.2],
+                            scale: [1, 1.2, 1]
                         }}
                         transition={{
-                            duration: 3 + i,
+                            duration: 4 + i,
                             repeat: Infinity,
-                            delay: i * 0.5
+                            ease: "easeInOut"
                         }}
                     >
-                        {i % 2 === 0 ? '💗' : '✨'}
+                        {i % 2 === 0 ? '✨' : '🌸'}
                     </motion.div>
                 ))}
             </div>
 
-            {/* Animal Crossing Style SVG */}
+            {/* 3D Modern Human Icon (MBTI Inspiration) */}
             <motion.svg
-                viewBox="0 0 220 300"
+                viewBox="0 0 200 240"
                 className="w-full h-full relative z-10"
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, type: "spring" }}
+                initial={{ opacity: 0, scale: 0.95 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.7, ease: "easeOut" }}
             >
                 <defs>
-                    <filter id={`softGlow-${typeId}`}>
-                        <feGaussianBlur stdDeviation="2" result="blur" />
+                    {/* 3D Lighting Gradients */}
+                    <linearGradient id={`bodyGrad-${typeId}`} x1="0%" y1="0%" x2="100%" y2="100%">
+                        <stop offset="0%" stopColor={outfitColors[0] || primaryColor} />
+                        <stop offset="100%" stopColor={outfitColors[1] || primaryColor} stopOpacity="0.8" />
+                    </linearGradient>
+
+                    <linearGradient id={`skinGrad-${typeId}`} x1="0%" y1="0%" x2="0%" y2="100%">
+                        <stop offset="0%" stopColor="#ffffff" stopOpacity="0.4" />
+                        <stop offset="100%" stopColor={skinTone} />
+                    </linearGradient>
+
+                    <filter id={`shadow-${typeId}`}>
+                        <feDropShadow dx="0" dy="4" stdDeviation="5" floodOpacity="0.1" />
+                    </filter>
+
+                    <filter id={`glow-${typeId}`}>
+                        <feGaussianBlur stdDeviation="3" result="blur" />
                         <feMerge>
                             <feMergeNode in="blur" />
                             <feMergeNode in="SourceGraphic" />
@@ -146,63 +110,91 @@ export default function CharacterPortrait({ typeId, design, primaryColor, size =
                 </defs>
 
                 {/* Shadow */}
-                <ellipse cx="110" cy="280" rx="70" ry="12" fill="#000000" opacity="0.1" />
+                <ellipse cx="100" cy="225" rx="50" ry="8" fill="#000" opacity="0.05" />
 
-                {/* Ears */}
-                {getEars()}
-
-                {/* Body (Classic Animal Crossing pear shape) */}
-                <path
-                    d="M 85 160 Q 75 220 70 240 Q 75 270 110 270 Q 145 270 150 240 Q 145 220 135 160 Z"
-                    fill={outfitColors[0] || primaryColor}
-                    stroke="#00000010" strokeWidth="2"
+                {/* 🧘 Body (Smooth pill shape / Minimalist 3D) */}
+                <motion.path
+                    d="M 60 140 Q 60 110 100 110 Q 140 110 140 140 L 145 200 Q 145 220 100 220 Q 55 220 55 200 Z"
+                    fill={`url(#bodyGrad-${typeId})`}
+                    filter={`url(#shadow-${typeId})`}
+                    stroke="#ffffff30"
+                    strokeWidth="1"
                 />
 
-                {/* Tiny Rounded Paws */}
-                <ellipse cx="65" cy="180" rx="15" ry="12" fill={hairColor} transform="rotate(20 65 180)" />
-                <ellipse cx="155" cy="180" rx="15" ry="12" fill={hairColor} transform="rotate(-20 155 180)" />
-
-                {/* Head (Large and Rounded) */}
+                {/* Arms (Simplified) */}
                 <g>
-                    {/* Main Head Shape */}
-                    <ellipse cx="110" cy="100" rx="75" ry="70" fill={hairColor} stroke="#00000010" strokeWidth="2" />
-
-                    {/* Face Inset (White area typical of AC villagers) */}
-                    <ellipse cx="110" cy="115" rx="55" ry="45" fill="white" opacity="0.15" />
-
-                    {/* Blush */}
-                    <ellipse cx="65" cy="120" rx="14" ry="10" fill="#ff9aa2" opacity="0.4" />
-                    <ellipse cx="155" cy="120" rx="14" ry="10" fill="#ff9aa2" opacity="0.4" />
-
-                    {/* Eyes (Simple and expressive AC eyes) */}
-                    <g>
-                        <circle cx="80" cy="105" r="14" fill="white" />
-                        <circle cx="80" cy="105" r="10" fill={eyeColor} />
-                        <circle cx="76" cy="100" r="4" fill="white" />
-
-                        <circle cx="140" cy="105" r="14" fill="white" />
-                        <circle cx="140" cy="105" r="10" fill={eyeColor} />
-                        <circle cx="136" cy="100" r="4" fill="white" />
-                    </g>
-
-                    {/* Nose (Animal snout) */}
-                    <ellipse cx="110" cy="130" rx="8" ry="6" fill="#333" opacity="0.8" />
-
-                    {/* Mouth (AC Cat smile/vibe) */}
-                    <path d="M 100 145 Q 110 152 120 145" fill="none" stroke="#333" strokeWidth="2" strokeLinecap="round" />
+                    <path d="M 65 145 Q 45 155 45 180" fill="none" stroke={`url(#bodyGrad-${typeId})`} strokeWidth="18" strokeLinecap="round" opacity="0.9" />
+                    <path d="M 135 145 Q 155 155 155 180" fill="none" stroke={`url(#bodyGrad-${typeId})`} strokeWidth="18" strokeLinecap="round" opacity="0.9" />
                 </g>
 
-                {/* Character Name Tag */}
-                <g transform="translate(0, 260)">
-                    <foreignObject x="0" y="0" width="220" height="40">
-                        <div className="flex justify-center items-center h-full">
-                            <span className="bg-white/90 backdrop-blur-sm px-4 py-1.5 rounded-full text-[10px] font-black text-gray-700 shadow-sm border-2 border-pink-100 uppercase tracking-widest">
-                                {archetype}
-                            </span>
-                        </div>
-                    </foreignObject>
+                {/* 👤 Head (Perfectly round iconic head) */}
+                <g filter={`url(#shadow-${typeId})`}>
+                    <circle cx="100" cy="75" r="45" fill={`url(#skinGrad-${typeId})`} />
+
+                    {/* Hair / Hat (Characteristic Silhouette) */}
+                    <path
+                        d="M 55 75 Q 55 30 100 30 Q 145 30 145 75 L 140 85 L 60 85 Z"
+                        fill={hairColor}
+                        opacity="0.9"
+                    />
+
+                    {/* Eyes (Simple iconic dots) */}
+                    <circle cx="85" cy="78" r="3.5" fill="#333" opacity="0.7" />
+                    <circle cx="115" cy="78" r="3.5" fill="#333" opacity="0.7" />
+
+                    {/* Cheeks */}
+                    <circle cx="78" cy="85" r="5" fill="#ff9aa2" opacity="0.3" />
+                    <circle cx="122" cy="85" r="5" fill="#ff9aa2" opacity="0.3" />
+
+                    {/* Subtle Smile */}
+                    <path d="M 92 92 Q 100 96 108 92" fill="none" stroke="#333" strokeOpacity="0.4" strokeWidth="2" strokeLinecap="round" />
+                </g>
+
+                {/* 🎩 Accessories (Based on Archetype) */}
+                {accessories.includes("Crown") && (
+                    <path d="M 85 35 L 90 25 L 100 35 L 110 25 L 115 35 Z" fill="#ffd700" stroke="#ffaa00" strokeWidth="1" />
+                )}
+
+                {accessories.includes("Glasses") && (
+                    <g transform="translate(0, 78)">
+                        <circle cx="85" cy="0" r="10" fill="none" stroke="#333" strokeWidth="1.5" opacity="0.5" />
+                        <circle cx="115" cy="0" r="10" fill="none" stroke="#333" strokeWidth="1.5" opacity="0.5" />
+                        <line x1="95" y1="0" x2="105" y2="0" stroke="#333" strokeWidth="1.5" opacity="0.5" />
+                    </g>
+                )}
+
+                {/* 🎨 Outfit Detail / Symbol */}
+                <g opacity="0.4">
+                    <circle cx="100" cy="150" r="12" fill="white" />
+                    <path d="M 100 144 L 100 156 M 94 150 L 106 150" stroke={primaryColor} strokeWidth="2" />
+                </g>
+
+                {/* Character Label Background */}
+                <g transform="translate(20, 205)">
+                    <rect x="0" y="0" width="160" height="28" rx="14" fill="white" opacity="0.9" />
+                    <text
+                        x="80"
+                        y="18"
+                        textAnchor="middle"
+                        className="text-[10px] font-black uppercase tracking-[0.1em]"
+                        fill="#555"
+                    >
+                        {archetype}
+                    </text>
                 </g>
             </motion.svg>
+
+            {/* 🎇 Sparkle particles */}
+            <motion.div
+                className="absolute bottom-6 left-1/2 -translate-x-1/2 flex gap-1"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 0.5 }}
+            >
+                <div className="w-1.5 h-1.5 rounded-full bg-white opacity-50" />
+                <div className="w-1.5 h-1.5 rounded-full bg-white opacity-30" />
+                <div className="w-1.5 h-1.5 rounded-full bg-white opacity-10" />
+            </motion.div>
         </div>
     );
 }
