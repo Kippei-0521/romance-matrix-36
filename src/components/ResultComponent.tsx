@@ -52,7 +52,7 @@ export default function ResultComponent({ result, onRestart }: ResultProps) {
                             initial={{ y: 20, opacity: 0 }}
                             animate={{ y: 0, opacity: 1 }}
                             transition={{ delay: 0.2 }}
-                            className="relative w-64 h-64 mb-4 rounded-3xl overflow-hidden shadow-2xl border-4 border-gray-800 bg-gradient-to-br from-gray-900 to-gray-800"
+                            className="relative w-64 h-64 mb-4 rounded-3xl overflow-hidden shadow-2xl border-4 border-pink-200 bg-gradient-to-br from-pink-100 via-purple-100 to-blue-100"
                         >
                             <CharacterPortrait
                                 typeId={result.id}

@@ -154,7 +154,7 @@ export default function Home() {
                               whileHover={{ y: -8, scale: 1.03 }}
                               className="bg-white rounded-[32px] border border-gray-100 p-3 flex flex-col items-center shadow-sm hover:shadow-2xl hover:border-pink-200 transition-all cursor-pointer group"
                             >
-                              <div className="relative w-full aspect-[4/5] rounded-[24px] overflow-hidden mb-3 bg-gradient-to-br from-gray-900 to-gray-800">
+                              <div className="relative w-full aspect-[4/5] rounded-[24px] overflow-hidden mb-3 bg-gradient-to-br from-pink-100 via-purple-100 to-blue-100">
                                 <CharacterPortrait
                                   typeId={id}
                                   design={visual}
