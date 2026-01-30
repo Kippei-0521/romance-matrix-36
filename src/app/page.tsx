@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import QuizComponent from '../components/QuizComponent';
-import { Heart, Grid } from 'lucide-react';
+import { Heart, Grid, Sparkles } from 'lucide-react';
 import { personalityTypes, X_AXES, Y_AXES } from '../lib/quizData';
 
 export default function Home() {
@@ -48,56 +48,63 @@ export default function Home() {
                 <span className="text-transparent bg-clip-text bg-gradient-to-r from-pink-500 to-blue-400">36タイプ</span>診断
               </h1>
 
-              <div className="flex flex-wrap justify-center gap-4 mb-10 text-[11px] font-black uppercase tracking-widest text-gray-400">
-                <span className="bg-white px-3 py-1 rounded-full border border-gray-100 shadow-sm">🕒 所要時間: 約3分</span>
-                <span className="bg-white px-3 py-1 rounded-full border border-gray-100 shadow-sm">📊 精度: 36タイプ分析</span>
-                <span className="bg-white px-3 py-1 rounded-full border border-gray-100 shadow-sm">💎 無料診断</span>
+              <div className="flex flex-wrap justify-center gap-3 mb-12">
+                <span className="bg-pink-500 text-white px-4 py-2 rounded-full text-[10px] font-black uppercase tracking-widest shadow-lg shadow-pink-200">所要時間: 約3分</span>
+                <span className="bg-white text-gray-400 px-4 py-2 rounded-full text-[10px] font-black uppercase tracking-widest border border-gray-100">36タイプ分析</span>
+                <span className="bg-white text-gray-400 px-4 py-2 rounded-full text-[10px] font-black uppercase tracking-widest border border-gray-100">完全無料</span>
               </div>
 
-              <p className="text-gray-500 mb-12 max-w-md mx-auto leading-loose text-[15px]">
-                あなたの「魂の価値観」と「愛の表現方法」をマトリックスで分析。<br />
-                自分でも気づかなかった「本当の自分」を、36の類型から可視化します。
+              <p className="text-gray-500 mb-12 max-w-lg mx-auto leading-loose text-[16px] px-4 font-medium">
+                あなたの「魂の価値観」と「愛の表現方法」の深淵へ。<br className="hidden md:block" />
+                25の直感的な質問が、あなたの恋愛の本質を36通りの回答から解き明かします。
               </p>
 
-              <button
+              <motion.button
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
                 onClick={() => setStarted(true)}
-                className="btn-primary text-xl px-16 group relative overflow-hidden"
+                className="btn-primary text-xl px-16 py-6 group relative overflow-hidden ring-4 ring-pink-100 ring-offset-4 ring-offset-[#fff5f7]"
               >
-                <span className="relative z-10">診断をスタートする</span>
+                <span className="relative z-10">診断を開始して真実を知る</span>
                 <motion.div
-                  className="absolute inset-0 bg-white/20 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-500"
+                  animate={{ x: ['100%', '-100%'] }}
+                  transition={{ duration: 3, repeat: Infinity, ease: "linear" }}
+                  className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent skew-x-12"
                 />
-              </button>
+              </motion.button>
             </div>
 
             {/* How it works */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-20 w-full px-4">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-24 w-full px-4">
               {[
-                { icon: <Heart className="text-pink-400" />, title: "25の深層質問", desc: "科学的なアプローチで、あなたの潜在的な恋愛傾向を抽出します。" },
-                { icon: <Grid className="text-blue-400" />, title: "36マトリックス", desc: "価値軸と行動軸の掛け合わせで、類を見ない詳細な分析を行います。" },
-                { icon: <span className="text-2xl">✨</span>, title: "真実のカルテ", desc: "あなたの強み、注意点、そして運命の相性を詳細に解説します。" }
+                { icon: <Heart size={24} className="text-pink-400" />, title: "25の深層質問", desc: "最新の心理学に基づき、あなたの潜在的な恋愛傾向を抽出。" },
+                { icon: <Grid size={24} className="text-blue-400" />, title: "36マトリックス", desc: "価値観と行動パターンの交差が生み出す、独自の36タイプ分析。" },
+                { icon: <Sparkles size={24} className="text-purple-400" />, title: "精密な診断書", desc: "強み、課題、相性、そして未来へのアドバイスを詳細に網羅。" }
               ].map((item, i) => (
                 <motion.div
                   key={i}
-                  initial={{ opacity: 0, y: 10 }}
+                  initial={{ opacity: 0, y: 30 }}
                   animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.2 * i }}
-                  className="bg-white/60 p-6 rounded-[32px] border border-white/80 shadow-sm text-center"
+                  transition={{ delay: 0.1 * i, type: "spring" }}
+                  className="bg-white p-8 rounded-[48px] border-2 border-white shadow-xl hover:shadow-2xl transition-shadow group"
                 >
-                  <div className="bg-white w-12 h-12 rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-sm border border-pink-50">
+                  <div className="bg-gray-50 w-16 h-16 rounded-3xl flex items-center justify-center mx-auto mb-6 group-hover:bg-pink-50 transition-colors">
                     {item.icon}
                   </div>
-                  <h4 className="font-black text-gray-800 mb-2">{item.title}</h4>
-                  <p className="text-[12px] text-gray-500 leading-relaxed">{item.desc}</p>
+                  <h4 className="font-black text-gray-800 mb-3 text-lg">{item.title}</h4>
+                  <p className="text-sm text-gray-500 leading-loose">{item.desc}</p>
                 </motion.div>
               ))}
             </div>
 
-            {/* Matrix Preview Table */}
-            <div className="w-full bg-white/40 backdrop-blur-sm p-6 rounded-[40px] border border-white/60 shadow-inner overflow-x-auto">
-              <div className="flex items-center gap-2 mb-6 px-4">
-                <Grid size={18} className="text-pink-400" />
-                <h3 className="font-black text-gray-700 uppercase tracking-widest text-xs">Personality Matrix Preview</h3>
+            {/* Matrix Preview */}
+            <div className="w-full bg-white p-10 rounded-[60px] shadow-2xl border-4 border-white mb-20">
+              <div className="flex flex-col items-center mb-10 text-center">
+                <div className="bg-pink-50 px-4 py-1 rounded-full mb-4">
+                  <p className="text-[10px] font-black text-pink-500 uppercase tracking-[0.3em]">Full Comparison Matrix</p>
+                </div>
+                <h3 className="text-2xl font-black text-gray-800">全36タイプの類型的分類</h3>
+                <p className="text-gray-400 text-xs mt-2">横軸：深層価値観 × 縦軸：恋愛スタイル</p>
               </div>
 
               <div className="min-w-[500px]">
