@@ -59,20 +59,23 @@ export default function ResultComponent({ result, onRestart }: ResultProps) {
                                 alt={result.characterName}
                                 fill
                                 className="object-cover"
+                                style={{
+                                    filter: `hue-rotate(${X_AXES.indexOf(result.coordinate.x as any) * 10 + Y_AXES.indexOf(result.coordinate.y as any) * 45}deg)`
+                                }}
                             />
                         </motion.div>
 
                         <div className="flex gap-2 z-10">
                             <span className="bg-white/80 backdrop-blur-md px-3 py-1 rounded-full text-[9px] font-black text-pink-500 uppercase tracking-widest border border-white">
-                                Matrix: {result.coordinate.x} / {result.coordinate.y}
+                                {result.name}
                             </span>
                         </div>
                     </div>
 
                     <div className="p-8 text-center bg-white">
-                        <p className="text-pink-500 font-bold text-xs mb-2 tracking-widest uppercase">あなたの恋愛診断結果は...</p>
+                        <p className="text-pink-500 font-bold text-xs mb-2 tracking-widest uppercase">あなたの恋愛スタイルは...</p>
                         <h1 className="text-3xl font-black mb-8 text-gray-800 leading-tight">
-                            {result.name}
+                            {result.characterName}
                         </h1>
 
                         <div className="space-y-12 text-left mt-8">

@@ -99,76 +99,101 @@ export default function Home() {
             </div>
 
             {/* Matrix View */}
-            <div className="w-full bg-white p-1 md:p-10 rounded-[40px] md:rounded-[60px] shadow-2xl border-4 border-white mb-20 overflow-hidden">
-              <div className="flex flex-col items-center mb-10 text-center px-4">
-                <div className="bg-pink-50 px-4 py-1 rounded-full mb-4">
-                  <p className="text-[10px] font-black text-pink-500 uppercase tracking-[0.3em]">Full Comparison Matrix</p>
+            <div className="w-full bg-white p-6 md:p-12 rounded-[50px] shadow-2xl border-4 border-white mb-20 overflow-hidden relative">
+              <div className="absolute top-0 right-0 w-64 h-64 bg-pink-50/50 rounded-full blur-3xl -mr-32 -mt-32 z-0" />
+
+              <div className="flex flex-col items-center mb-12 text-center relative z-10 px-4">
+                <div className="bg-pink-100/50 px-5 py-1.5 rounded-full mb-5 border border-pink-100">
+                  <p className="text-[10px] font-black text-pink-500 uppercase tracking-[0.4em]">Personality Matrix Explorer</p>
                 </div>
-                <h3 className="text-2xl md:text-3xl font-black text-gray-800">全36タイプの類型的分類</h3>
-                <p className="text-gray-400 text-[10px] md:text-xs mt-2 uppercase tracking-widest font-bold">X: Core Value × Y: Relationship Style</p>
+                <h3 className="text-3xl md:text-5xl font-black text-gray-800 tracking-tight leading-tight">全36タイプの類型的分類</h3>
+                <p className="text-gray-400 text-[11px] md:text-sm mt-4 uppercase tracking-[0.2em] font-bold max-w-2xl leading-relaxed">
+                  あなたの深層にある「価値観(X)」と恋愛の「表現スタイル(Y)」の交差点。<br />
+                  それぞれに固有の名称と物語を持つ、36人の分身たち。
+                </p>
               </div>
 
-              <div className="overflow-x-auto pb-6 scrollbar-pink">
-                <div className="min-w-[1000px] px-4">
-                  <table className="w-full border-separate border-spacing-2">
-                    <thead>
-                      <tr>
-                        <th className="w-24"></th>
-                        {X_AXES.map(x => (
-                          <th key={x} className="pb-4">
-                            <div className="bg-gray-50 py-3 rounded-2xl border border-gray-100">
-                              <p className="text-[10px] font-black text-gray-400 uppercase tracking-widest mb-1">{x}</p>
-                              <p className="text-xs font-black text-gray-600">{personalityTypes[`${x.toLowerCase()}-${Y_AXES[0].toLowerCase()}`]?.emoji} {x}</p>
-                            </div>
-                          </th>
-                        ))}
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {Y_AXES.map(y => (
-                        <tr key={y}>
-                          <td className="pr-4 py-2">
-                            <div className="bg-white py-4 rounded-2xl border border-gray-100 shadow-sm text-center">
-                              <p className="text-[9px] font-black text-pink-300 uppercase tracking-tighter mb-1">{y}</p>
-                              <p className="text-[10px] font-black text-gray-500 leading-tight px-1">{y}</p>
-                            </div>
-                          </td>
-                          {X_AXES.map(x => {
-                            const id = `${x.toLowerCase()}-${y.toLowerCase()}`;
-                            const type = personalityTypes[id];
-                            return (
-                              <td key={id} className="p-1 group">
-                                <motion.div
-                                  whileHover={{ y: -5, scale: 1.02 }}
-                                  className="bg-gray-50/50 rounded-3xl border border-gray-100 p-2 flex flex-col items-center transition-all hover:bg-white hover:shadow-xl hover:border-pink-100 h-full"
-                                >
-                                  <div className="relative w-full aspect-square rounded-2xl overflow-hidden mb-2 bg-white shadow-inner">
-                                    <Image
-                                      src={type.imagePath}
-                                      alt={type.name}
-                                      fill
-                                      className="object-cover group-hover:scale-110 transition-transform duration-500"
-                                    />
-                                    <div className="absolute top-1 right-1 bg-white/90 backdrop-blur-sm w-6 h-6 rounded-lg flex items-center justify-center text-xs shadow-sm">
-                                      {type.emoji}
-                                    </div>
-                                  </div>
-                                  <p className="text-[9px] font-bold text-gray-700 text-center leading-tight line-clamp-2 px-1 mb-1">
-                                    {type.name}
-                                  </p>
-                                </motion.div>
-                              </td>
-                            );
-                          })}
-                        </tr>
-                      ))}
-                    </tbody>
-                  </table>
+              <div className="overflow-x-auto pb-10 scrollbar-pink relative z-10">
+                <div className="min-w-[1200px] px-4">
+                  <div className="grid grid-cols-7 gap-4">
+                    {/* Header corner */}
+                    <div className="flex flex-col items-center justify-center bg-gray-50/50 rounded-3xl border border-dashed border-gray-200 p-4">
+                      <Sparkles className="text-pink-200 mb-2" size={24} />
+                      <span className="text-[10px] font-black text-gray-300 uppercase tracking-widest">36 Types</span>
+                    </div>
+
+                    {/* X Headers */}
+                    {X_AXES.map(x => (
+                      <div key={x} className="bg-white p-5 rounded-[32px] border-2 border-gray-50 shadow-sm text-center">
+                        <p className="text-[10px] font-black text-gray-300 uppercase tracking-widest mb-2">Value: {x}</p>
+                        <div className="flex items-center justify-center gap-2">
+                          <span className="text-xl">{personalityTypes[`${x.toLowerCase()}-${Y_AXES[0].toLowerCase()}`]?.emoji}</span>
+                          <h4 className="font-black text-gray-700 text-[13px] tracking-widest">{personalityTypes[`${x.toLowerCase()}-${Y_AXES[0].toLowerCase()}`]?.name.split('の')[0]}</h4>
+                        </div>
+                      </div>
+                    ))}
+
+                    {/* Rows */}
+                    {Y_AXES.map((y, yIdx) => (
+                      <React.Fragment key={y}>
+                        {/* Y Header */}
+                        <div className="bg-white p-5 rounded-[32px] border-2 border-gray-50 shadow-sm flex flex-col justify-center items-center">
+                          <p className="text-[9px] font-black text-pink-200 uppercase tracking-widest mb-2">Style</p>
+                          <h4 className="font-black text-gray-500 text-[11px] leading-tight text-center uppercase">{y}</h4>
+                        </div>
+
+                        {/* Data Cells */}
+                        {X_AXES.map((x, xIdx) => {
+                          const id = `${x.toLowerCase()}-${y.toLowerCase()}`;
+                          const type = personalityTypes[id];
+                          const hueShift = (yIdx * 45) + (xIdx * 10);
+                          const saturation = 110 + (yIdx * 5);
+
+                          return (
+                            <motion.div
+                              key={id}
+                              whileHover={{ y: -8, scale: 1.03 }}
+                              className="bg-white rounded-[32px] border border-gray-100 p-3 flex flex-col items-center shadow-sm hover:shadow-2xl hover:border-pink-200 transition-all cursor-pointer group"
+                            >
+                              <div className="relative w-full aspect-[4/5] rounded-[24px] overflow-hidden mb-3 bg-gray-50">
+                                <Image
+                                  src={type.imagePath}
+                                  alt={type.characterName}
+                                  fill
+                                  className="object-cover group-hover:scale-110 transition-transform duration-700"
+                                  style={{
+                                    filter: `hue-rotate(${hueShift}deg) saturate(${saturation}%)`
+                                  }}
+                                />
+                                <div className="absolute top-2 right-2 bg-white/80 backdrop-blur-md w-7 h-7 rounded-xl flex items-center justify-center text-sm shadow-sm ring-1 ring-white/50">
+                                  {type.emoji}
+                                </div>
+                                <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+                              </div>
+                              <h5 className="text-[11px] font-black text-gray-800 text-center leading-tight mb-1 group-hover:text-pink-500 transition-colors">
+                                {type.characterName}
+                              </h5>
+                              <p className="text-[8px] font-bold text-gray-400 uppercase tracking-[0.1em]">
+                                {type.name.split('の')[1]}
+                              </p>
+                            </motion.div>
+                          );
+                        })}
+                      </React.Fragment>
+                    ))}
+                  </div>
                 </div>
               </div>
-              <div className="mt-8 text-center bg-gray-50 py-4 rounded-3xl mx-4">
-                <p className="text-[11px] text-gray-400 font-bold tracking-widest uppercase">
-                  ✨ 合計36通りの恋愛スタイル。あなたはどこに位置する？
+
+              <div className="mt-8 flex items-center justify-center gap-10 bg-gray-50/80 backdrop-blur-sm py-6 rounded-[40px] border border-white">
+                <div className="flex flex-col items-center">
+                  <p className="text-2xl font-black text-gray-700">36</p>
+                  <p className="text-[9px] font-black text-gray-400 uppercase tracking-widest">Profiles</p>
+                </div>
+                <div className="w-[1px] h-10 bg-gray-200" />
+                <p className="text-[12px] text-gray-500 font-bold tracking-widest leading-loose max-w-sm text-center px-4">
+                  深層心理の交差が生む、36通りの詳細な分析。<br />
+                  あなたは、どの星の下に生まれ、誰と惹かれ合うのか。
                 </p>
               </div>
             </div>

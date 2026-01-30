@@ -81,11 +81,50 @@ const Y_PSYCHOLOGY: Record<YAxis, { mode: string; defense: string; trap: string 
     Stoic: { mode: "克己的修練", defense: "沈黙と忍耐", trap: "孤独への埋没" },
 };
 
+const UNIQUE_CHARACTERS: Record<string, string> = {
+    "romantic-traditional": "純愛の騎士",
+    "romantic-modern": "都会の恋仲",
+    "romantic-casual": "放浪の詩人",
+    "romantic-formal": "気高き求愛者",
+    "romantic-creative": "夢幻の演出家",
+    "romantic-stoic": "孤独な情熱家",
+    "analytical-traditional": "知の守護者",
+    "analytical-modern": "論理の設計士",
+    "analytical-casual": "冷徹な観察者",
+    "analytical-formal": "冷徹な審判",
+    "analytical-creative": "異端の予言者",
+    "analytical-stoic": "硬質の求道者",
+    "independent-traditional": "孤高の覇者",
+    "independent-modern": "自由の開拓者",
+    "independent-casual": "風の旅人",
+    "independent-formal": "誇り高き策士",
+    "independent-creative": "変幻の改革者",
+    "independent-stoic": "沈黙の哲学者",
+    "altruistic-traditional": "慈愛の聖者",
+    "altruistic-modern": "共感の支援者",
+    "altruistic-casual": "陽だまりの奏者",
+    "altruistic-formal": "献身の執事",
+    "altruistic-creative": "希望の導き手",
+    "altruistic-stoic": "不屈の守護神",
+    "enigmatic-traditional": "深淵の語り部",
+    "enigmatic-modern": "幻影の魔術師",
+    "enigmatic-casual": "浮世の傍観者",
+    "enigmatic-formal": "氷の支配者",
+    "enigmatic-creative": "千の顔を持つ者",
+    "enigmatic-stoic": "月影の潜伏者",
+    "vibrant-traditional": "黄金の指導者",
+    "vibrant-modern": "時代の寵児",
+    "vibrant-casual": "太陽の遊び人",
+    "vibrant-formal": "祝祭の主賓",
+    "vibrant-creative": "光の共鳴者",
+    "vibrant-stoic": "不滅の冒険家"
+};
+
 export const personalityTypes: Record<string, PersonalityType> = {};
 
 // Generate 36 Types with sophisticated long-form content
-X_AXES.forEach((x) => {
-    Y_AXES.forEach((y) => {
+X_AXES.forEach((x, xIdx) => {
+    Y_AXES.forEach((y, yIdx) => {
         const id = `${x.toLowerCase()}-${y.toLowerCase()}`;
         const xInfo = X_PSYCHOLOGY[x];
         const yInfo = Y_PSYCHOLOGY[y];
@@ -96,7 +135,7 @@ X_AXES.forEach((x) => {
             id,
             name: `${xDetail.name}の${yDetail.name}`,
             emoji: xDetail.emoji,
-            characterName: `${xDetail.name}の執行官`,
+            characterName: UNIQUE_CHARACTERS[id] || `${xDetail.name}の執行官`,
             imagePath: getFallbackImage(x),
             description: `あなたは「${xInfo.essence}」を魂の核に持ちながら、現実世界では「${yInfo.mode}」というドレスを纏って愛を語るタイプです。人々はあなたの${yDetail.name}に惹かれますが、その奥に潜む${xDetail.name}の深淵を知った時、真の衝撃を受けることになります。`,
             innerPsychology: `あなたの内面では、常に「${xInfo.desire}」という渇望が渦巻いています。恋愛において、あなたは単なるパートナーシップ以上のものを求めています。それは魂の交感であり、世界が反転するような体験です。しかし、同時に「${xInfo.fear}」という根源的な恐怖が、あなたに慎重さを強いています。この二律背反が、あなたの醸し出す独特の「重み」の正体です。`,
